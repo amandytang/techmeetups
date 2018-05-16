@@ -19,10 +19,11 @@ export default class MeetupInfo extends PureComponent {
         <div id="description" dangerouslySetInnerHTML={createMarkup()} />
         <Link to={ {
           pathname: `/meetup/${info.id}`,
-          state: { fromHome: true, meetupId: `${info.id}` }
-        } } ><button className="markerViewDetails" id={info.id}>View Details</button>
+          state: { meetupId: `${info.id}` }
+        } } ><button className="markerViewDetails">View Details</button>
         </Link>
       </div>
     );
   }
 }
+// at this point, do we want clicking on the map to fly to?

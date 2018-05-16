@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import {render} from 'react-dom';
-
+import {FlyToInterpolator} from 'react-map-gl';
 import MapGL, {Marker, Popup} from 'react-map-gl';
 import MeetupPin from './meetup-pin';
 import MeetupInfo from './meetup-info';
-
- // instead of importing this json object, need to make one in here
+import * as d3 from 'd3';
+import {MeetupContext} from './App';
 
 const TOKEN = 'pk.eyJ1IjoidGVjaG1lZXQiLCJhIjoiY2pndWRpOHVnMW51dzJ3bWx2dWMwd3BjOSJ9.hsVtz9FaTpBnCRunS3evUQ';
 
@@ -13,7 +12,7 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
+     this.state = {
       viewport: {
         latitude: -33.86,
         longitude: 151.2,
@@ -23,7 +22,8 @@ export default class App extends Component {
         width: 500,
         height: 500
       },
-      popupInfo: null    };
+      popupInfo: null
+    };
   }
 
   componentDidMount() {
@@ -54,7 +54,7 @@ export default class App extends Component {
       <Marker key={`marker-${index}`}
         longitude={meetup.longitude}
         latitude={meetup.latitude} >
-        <MeetupPin size={20} onClick={() => this.setState({popupInfo: meetup})} />
+        <MeetupPin size={20} onClick={() => this._goToMarker(meetup)} />
       </Marker>
     );
   }
@@ -72,24 +72,46 @@ export default class App extends Component {
         <MeetupInfo info={popupInfo} />
       </Popup>
     );
+
   }
+
+  _goToMarker = (meetup) => {
+    this.setState({popupInfo: meetup});
+        const viewport = {
+            ...this.state.viewport,
+            longitude: meetup.longitude,
+            latitude: meetup.latitude,
+            zoom: 11.4,
+            transitionDuration: 3500,
+            transitionInterpolator: new FlyToInterpolator(),
+            transitionEasing: d3.easeCubic
+        };
+        this.setState({viewport});
+    };
 
   render() {
 
     const {viewport} = this.state;
 
     return (
-      <MapGL
-        {...viewport}
-        mapStyle="mapbox://styles/techmeet/cjguetle700042roi9k1mb8mq"
-        onViewportChange={this._updateViewport}
-        mapboxApiAccessToken={TOKEN} >
+      <MeetupContext.Consumer>
 
-        { this.props.geojson.map(this._renderMeetupMarker) }
+        {({ meetups, geojson }) => {
 
-        {this._renderPopup()}
-      </MapGL>
+          return (
+            <MapGL
+              {...viewport}
+              mapStyle="mapbox://styles/techmeet/cjguetle700042roi9k1mb8mq"
+              onViewportChange={this._updateViewport}
+              mapboxApiAccessToken={TOKEN} >
+               {geojson.map(this._renderMeetupMarker)}
+               {this._renderPopup()}
+            </MapGL>
+          )
+        }
+      }
+
+      </MeetupContext.Consumer>
     );
   }
-
 }

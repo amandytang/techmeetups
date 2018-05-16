@@ -15,7 +15,6 @@ body, html {
   display: none !important;
 }
 
-
  #root {
   width: 300px !important;
 }
@@ -61,16 +60,105 @@ body, html {
   box-shadow: 0 12px 36px 16px rgba(0,0,0,0.24);
   transform: translate3d(0px, 0, 0);
 }
+
 .close-menu {
   display:inline-block;
   float: right;
   padding: 5px;
+  transition: 300ms ease-out;
 }
 
 .close-menu:hover {
   cursor: pointer;
+  opacity: 0.5;
+}
+/* LOGIN MODAL */
+.ReactModal__Overlay--after-open {
+  z-index: 20000 !important;
+  background-color: rgba(0, 0, 0, 0.45) !important;
+}
+.ReactModal__Content {
+  width: 400px;
+  padding: 0 !important;
+  height: 290px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.modalContent {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+
+}
+.modalContent p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.9em;
+  color: #121212;
+  padding-top: 5px;
+}
+.close-modal {
+  display:inline-block;
+  float: right;
+  padding: 5px;
+  transition: 300ms ease-out;
+}
+.close-modal:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+.modalHeading {
+  color: #121212;
+  background-color: #FBC02D;
+  font-weight: bold;
+  width: 100% !important;
+  font-size: 1em;
+  font-family: 'Abel', sans-serif;
+  letter-spacing: 1px;
+  padding: 10px 20px 10px 20px;
+
+}
+.alignment-wrapper {
+  position: absolute;
+  bottom: 25px;
+  width: 100%;
+}
+a {
+  text-decoration: none !important;
+}
+.signIn {
+  width: 88%;
+  color: white;
+  height: 40px;
+  margin: auto;
+  left: -50%;
+  background-color: #e15063;
+  border:none;
+  font-size: 0.9em;
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
+}
+.signIn:hover {
+  background: #bd4958;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+  color: white;
+  text-decoration: none;
+  text-shadow: -1px -1px 0 #a73e4b;
+  transition: all 250ms linear;
+}
+.meetup-logo {
+  padding-top: 15px;
+  padding-bottom: 30px;
 }
 
+/* MEETUPS LIST */
 #meetups a {
   text-decoration: none;
 }
@@ -108,6 +196,54 @@ body, html {
   color: rgb(80, 80, 80);
 }
 
+/* MEETUP DETAILS */
+.meetupInfo {
+  padding: 5px 20px 0px 20px !important;
+  font-size: 0.90em;
+  font-family: 'Roboto', sans-serif;
+  color: #121212;
+  border-bottom: 1px solid #ddd;
+}
+.meetupDetailsName {
+  padding: 10px 20px 10px 20px !important;
+  font-weight: bold;
+  margin: 0px !important;
+  color: #121212;
+  background-color: #FBC02D;
+  width: 100% !important;
+  font-size: 1em;
+  font-family: 'Abel', sans-serif;
+  letter-spacing: 1px;
+}
+.meetupJoin {
+  margin: 20px auto 20px auto;
+  display: block;
+  width: 270px;
+  padding: 8px 0px 8px 0px;
+  border: 1px solid #353c37;
+  background-color: #3f4741;
+  box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
+  transition: all 150ms linear;
+  color: #fff;
+}
+.meetupJoin:hover {
+  background: #3b433d;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+  color: #6a786e;
+  text-decoration: none;
+  text-shadow: -1px -1px 0 #282d29;
+  transition: all 250ms linear;
+}
+.meetupDetailsContent {
+  padding: 0px 20px 10px 20px !important;
+}
+
+.meetupDetailsContent p {
+  font-size: 0.90em;
+  font-family: 'Roboto', sans-serif;
+  color: #121212;
+}
 /* TOOLTIPS */
 [tooltip] {
   position: relative;
@@ -129,7 +265,7 @@ body, html {
 [tooltip]::before {
   content: '';
   border: 5px solid transparent;
-  z-index: 1001; /* absurdity 1 */
+  z-index: 1001;
 }
 [tooltip]::after {
   content: attr(tooltip);
@@ -144,7 +280,7 @@ body, html {
   box-shadow: 0 1em 2em -.5em rgba(0, 0, 0, 0.35);
   background: #333;
   color: #fff;
-  z-index: 1000; /* absurdity 2 */
+  z-index: 1000;
 }
 
 [tooltip]:hover::before,
@@ -258,13 +394,15 @@ body, html {
 }
 .mapboxgl-popup-close-button {
   margin-top: 5px;
+  transition: 300ms ease-out;
+
 }
 .mapboxgl-popup-close-button:hover {
   margin-top: 5px;
-  background-color: #edb24f;
-  opacity: 0.5;
-
+  background-color: #FBC02D;
+  opacity: 0.6;
 }
+
 .markerViewDetails {
   margin: 20px auto 20px auto;
   display: block;
