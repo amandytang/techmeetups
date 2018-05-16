@@ -31,9 +31,7 @@ const Routes = ( // App component holds the Navigation component - but how do I 
         } />
         <Route path="/oauth2" render={props =>
           <div>
-
-          <Auth />
-
+            <Auth />
           </div>
         } />
     </div>
@@ -44,14 +42,5 @@ const Routes = ( // App component holds the Navigation component - but how do I 
 
 ReactDOM.render(Routes, document.getElementById('root'));
 registerServiceWorker();
-
-// { props.history.push(`/meetup/${window.location.hash.split(/state=/)[1]}`) }
-
-// {console.log(window.location.hash.split(/state=/)[1])}
-
-// {localStorage.setItem('user', JSON.stringify(user))}
-
-  // http://localhost:3000/oauth2/#access_token=fb39a6b32e8b5faa99fdca0a13ef0716&token_type=bearer&expires_in=3600&state=250024077
-
 
             // {localStorage.setItem("hello",hello)}

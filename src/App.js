@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.css';
 
-// on entry into the component being rendered by the route (Login, which renders the login to meetup.com modal), have a ComponentDidMount function
-// bonus: use react-transition-group to animate the modal appearance/route change 
+// bonus: use react-transition-group to animate the modal appearance/route change
 
 export const MeetupContext = React.createContext();
 
@@ -60,7 +59,6 @@ componentDidMount () {
       <MeetupContext.Provider value={this.state}>
         {this.props.children}
       </MeetupContext.Provider>
-
     );
   }
 }

@@ -7,15 +7,14 @@ class Auth extends React.Component {
   }
   constructor(props, context) {
     super(props, context);
-    }
+  }
 
   componentDidMount() {
-  // extract token from url, save into local storage and
+  // extract token from url, save into local storage and redirect back to meetup detail page
     let token = window.location.hash.match("(?<=token=)(.*)(?=&token)")[1];
     localStorage.setItem("token", token);
 
     this.context.router.history.push(`/meetup/${window.location.hash.split(/state=/)[1]}`);
-
   };
 
   render() {

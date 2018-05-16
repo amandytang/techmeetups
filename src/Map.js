@@ -72,7 +72,6 @@ export default class App extends Component {
         <MeetupInfo info={popupInfo} />
       </Popup>
     );
-
   }
 
   _goToMarker = (meetup) => {
@@ -82,7 +81,7 @@ export default class App extends Component {
             longitude: meetup.longitude,
             latitude: meetup.latitude,
             zoom: 11.4,
-            transitionDuration: 3500,
+            transitionDuration: 3000,
             transitionInterpolator: new FlyToInterpolator(),
             transitionEasing: d3.easeCubic
         };

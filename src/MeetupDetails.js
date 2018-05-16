@@ -20,7 +20,37 @@ class MeetupDetails extends React.Component {
    }
 
    handleOpenModal () {
+     // what happens when the user clicks join. We shouldn't open the modal if they have already got a token, and should actually let them join the meetup here i.e. make the api call
+     // also need to handle what happens if the token has expired (get a refresh token)
+     // if successful, change button to joined and make it green
+     if (localStorage.getItem("token")) {
+       // console.log(localStorage.getItem("token"));
+
+     // Failed to load https://api.meetup.com/2/rsvp: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+
+     // it attempts to fetch (which is good - but )
+     // possible issues: wrong url, wrong headers, CORS
+    //  fetch('https://api.meetup.com/2/rsvp', {
+    //    method: 'POST',
+    //    headers: {
+    //      'Accept': 'application/json',
+    //      'Content-Type': 'application/json',
+    //      'Authorization': 'Bearer {a72e1a2b83fb9c03fbdacc4e74c11e90}'
+    //      // Access-Control-Allow-Headers: * ???
+    //    }
+    //    // ,
+    //    // body: JSON.stringify({
+    //    //   firstParam: 'yourValue',
+    //    //   secondParam: 'yourOtherValue',
+    //    // })
+    //  }).then(res => res.json())
+    // .then(json => {
+    //   console.log(json);
+    //   })
+
+   } else {
      this.setState({ showModal: true });
+     }
    }
 
   handleCloseModal () {
