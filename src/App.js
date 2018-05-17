@@ -80,7 +80,7 @@ handleSubmit = () => {
 
 componentDidMount () {
   // let jsonp = require('jsonp');
-
+  this.searchBar.focus();
 
   let userLat;
   let userLng;
@@ -150,6 +150,7 @@ fetchMeetups();
       <input
             className="searchInput"
             placeholder="Search a city"
+            ref={(input) => { this.searchBar = input }}
             value={this.state.textbox}
             onChange={this.setCity}
           />
