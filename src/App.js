@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.css';
 import Geocode from "react-geocode";
-
-
+import axios from 'axios';
 export const MeetupContext = React.createContext();
 
 class App extends React.Component {
@@ -80,7 +79,16 @@ handleSubmit = () => {
 
 
 componentDidMount () {
+  // let jsonp = require('jsonp');
+
+  if (window.location.protocol != 'https:' && window.chrome) {
+      axios.get('http://ip-api.com/json').then( function (res) {
+          console.log(res);
+
+})
+}
   navigator.geolocation.getCurrentPosition(locationHandler);
+
   let currentComponent = this;
 
   function locationHandler (position) {
