@@ -3,6 +3,9 @@ import { MeetupContext } from "./App";
 import Moment from 'react-moment';
 import moment from 'moment';
 import ReactModal from 'react-modal';
+import axios from 'axios';
+import jsonp from 'jsonp-es6';
+
 
 class MeetupDetails extends React.Component {
   constructor(props) {
@@ -18,35 +21,66 @@ class MeetupDetails extends React.Component {
      this.handleOpenModal = this.handleOpenModal.bind(this);
      this.handleCloseModal = this.handleCloseModal.bind(this);
    }
+// curl -i -X OPTIONS -H "Origin: http://localhost:3000/meetup/250024077" \ -H 'Access-Control-Request-Method: POST' \ -H 'Access-Control-Request-Headers: Content-Type, Authorization' \ "https://api.meetup.com/2/rsvp"
 
    handleOpenModal () {
      // what happens when the user clicks join. We shouldn't open the modal if they have already got a token, and should actually let them join the meetup here i.e. make the api call
-     // also need to handle what happens if the token has expired (get a refresh token)
+     // need to handle what happens if the token has expired (get a refresh token)
      // if successful, change button to joined and make it green
      if (localStorage.getItem("token")) {
-       // console.log(localStorage.getItem("token"));
+      let token = localStorage.getItem("token");
+      let id = window.location.href.match(/[^\/]+$/)[0];
 
-     // Failed to load https://api.meetup.com/2/rsvp: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+// Failed to load https://api.meetup.com/2/rsvp: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
 
-     // it attempts to fetch (which is good - but )
-     // possible issues: wrong url, wrong headers, CORS
-    //  fetch('https://api.meetup.com/2/rsvp', {
-    //    method: 'POST',
-    //    headers: {
-    //      'Accept': 'application/json',
-    //      'Content-Type': 'application/json',
-    //      'Authorization': 'Bearer {a72e1a2b83fb9c03fbdacc4e74c11e90}'
-    //      // Access-Control-Allow-Headers: * ???
-    //    }
-    //    // ,
-    //    // body: JSON.stringify({
-    //    //   firstParam: 'yourValue',
-    //    //   secondParam: 'yourOtherValue',
-    //    // })
-    //  }).then(res => res.json())
-    // .then(json => {
-    //   console.log(json);
-    //   })
+      const proxyurl = "https://cors-anywhere.herokuapp.com/";
+      const url = `https://api.meetup.com/2/rsvp/?access_token=${token}`; // if i don't use headers, can i use this?
+      const url2 = `https://api.meetup.com/2/rsvp/`;
+
+// if I don't use proxy, I get 405. If I do, I get 400 (bad request)
+// possible issues: fetching wrong url, sending wrong headers, CORS, not using the right parameters, not sending the parameters correctly...
+      // axios({ method: 'POST',
+      //   url: url,
+      //   // headers: {Authorization: `Bearer ${token}`},
+      //   data: { rsvp: 'yes', event_id: id } })
+      //   .then(res => res.json()).catch(error => console.error('Error:', error))
+
+const joinParams = {
+  method: 'POST',    // 405 - method not allowed - is it this one??
+  headers: {Authorization: `Bearer ${token}`},
+  rsvp: 'yes',
+  event_id: id
+};
+
+const joinMeetup = () => {
+
+jsonp(url2, joinParams, (function (err, results) {
+  if (err) {
+    console.error(err.message);
+  } else {
+  console.log(results);
+  }
+}));
+
+}
+joinMeetup();
+
+
+     // fetch(proxyurl + url, {
+     //   method: 'POST',
+     //   // withCredentials: true
+     //   // credentials: 'include',
+     //   headers: {
+     //     // 'Accept': 'application/json',
+     //      // 'Content-Type': 'application/json',
+     //      'Authorization': `Bearer ${token}`
+     //     // Access-Control-Allow-Headers: * ???
+     //   },
+     //   body: JSON.stringify({
+     //     rsvp: 'yes',
+     //     event_id: id
+     //   })
+     // }).then(res => res.json()).catch(error => console.error('Error:', error))
 
    } else {
      this.setState({ showModal: true });
@@ -56,7 +90,6 @@ class MeetupDetails extends React.Component {
   handleCloseModal () {
     this.setState({ showModal: false });
   }
-
 
   handleClick() {
     this.setState(prevState => ({
