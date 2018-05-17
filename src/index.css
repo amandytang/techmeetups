@@ -72,6 +72,25 @@ body, html {
   cursor: pointer;
   opacity: 0.5;
 }
+
+/* SEARCH */
+#searchContainer {
+  position: absolute;
+  left: 60px;
+  top: 25px;
+  z-index: 12000;
+}
+
+.searchInput {
+  height: 30px;
+  width: 190px;
+  margin-right: 5px; 
+}
+
+.searchButton {
+  height: 30px;
+}
+
 /* LOGIN MODAL */
 .ReactModal__Overlay--after-open {
   z-index: 20000 !important;
@@ -90,6 +109,23 @@ body, html {
   border: none !important;
   border-radius: 0 !important;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  -webkit-transform: scale(0.5) rotateX(-30deg);
+  transform: scale(0.5) rotateX(-30deg);
+}
+
+.ReactModal__Content--after-open {
+  -webkit-transform: scale(1) rotateX(0deg);
+    transform: scale(1) rotateX(0deg);
+    transition: all 150ms ease-in;
+  }
+  .ReactModal__Overlay--before-close {
+    opacity: 0;
+  }
+
+.ReactModal__Content--before-close {
+  -webkit-transform: scale(0.5) rotateX(30deg);
+  transform: scale(0.5) rotateX(30deg);
+  transition: all 150ms ease-in;
 }
 .modalContent {
   text-align: center;

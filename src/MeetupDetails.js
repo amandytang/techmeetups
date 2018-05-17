@@ -3,8 +3,7 @@ import { MeetupContext } from "./App";
 import Moment from 'react-moment';
 import moment from 'moment';
 import ReactModal from 'react-modal';
-import axios from 'axios';
-import jsonp from 'jsonp-es6';
+
 
 
 class MeetupDetails extends React.Component {
@@ -34,7 +33,7 @@ class MeetupDetails extends React.Component {
 // Failed to load https://api.meetup.com/2/rsvp: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
 
       const proxyurl = "https://cors-anywhere.herokuapp.com/";
-      const url = `https://api.meetup.com/2/rsvp/?access_token=${token}`; // if i don't use headers, can i use this?
+      const url = `https://api.meetup.com/2/rsvp/?access_token=${token}`;
       const url2 = `https://api.meetup.com/2/rsvp/`;
 
 // if I don't use proxy, I get 405. If I do, I get 400 (bad request)
@@ -45,42 +44,60 @@ class MeetupDetails extends React.Component {
       //   data: { rsvp: 'yes', event_id: id } })
       //   .then(res => res.json()).catch(error => console.error('Error:', error))
 
-const joinParams = {
-  method: 'POST',    // 405 - method not allowed - is it this one??
-  headers: {Authorization: `Bearer ${token}`},
-  rsvp: 'yes',
-  event_id: id
-};
 
-const joinMeetup = () => {
+    //   var request = require('request');
+    //
+    //   var options = {
+    //   url: url,
+    //   rsvp: 'yes',
+    //   event_id: id
+    // };
+    //
+    // function callback(error, response, body) {
+    //     console.log('error:', error); // Print the error if one occurred
+    //     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    //     console.log('body:', body); // Print the HTML for the Google homepage.
+    //   };
+    //
+    //   request(options, callback);
 
-jsonp(url2, joinParams, (function (err, results) {
-  if (err) {
-    console.error(err.message);
-  } else {
-  console.log(results);
-  }
-}));
+// const joinParams = {
+//   method: 'POST',    // 405 - method not allowed - is it this one??
+//   rsvp: 'yes',
+//   event_id: id
+// };
+//
+// const joinMeetup = () => {
+//
+// jsonp(url2, joinParams, (function (err, results) {
+//   if (err) {
+//     console.error(err.message);
+//   } else {
+//   console.log(results);
+//   }
+// }));
+//
+// }
+// joinMeetup();
 
-}
-joinMeetup();
 
+     fetch(url, {
+        method: 'POST',
+    //     headers: {
+    //     'Accept': 'application/json, text/plain, */*',
+    //     'Content-Type': 'application/json'
+    // // // },
+    //    headers: {
+    //   'Authorization': 'Bearer ' + token
+    //           },
+       // withCredentials: true
+       // credentials: 'include',
 
-     // fetch(proxyurl + url, {
-     //   method: 'POST',
-     //   // withCredentials: true
-     //   // credentials: 'include',
-     //   headers: {
-     //     // 'Accept': 'application/json',
-     //      // 'Content-Type': 'application/json',
-     //      'Authorization': `Bearer ${token}`
-     //     // Access-Control-Allow-Headers: * ???
-     //   },
-     //   body: JSON.stringify({
-     //     rsvp: 'yes',
-     //     event_id: id
-     //   })
-     // }).then(res => res.json()).catch(error => console.error('Error:', error))
+       body:
+       // JSON.stringify({
+         'rsvp=yes&event_id=' + id
+       // })
+     }).then(res => res.json()).catch(error => console.error('Error:', error))
 
    } else {
      this.setState({ showModal: true });
