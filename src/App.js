@@ -81,59 +81,63 @@ handleSubmit = () => {
 componentDidMount () {
   // let jsonp = require('jsonp');
 
-  if (window.location.protocol != 'https:' && window.chrome) {
-      axios.get('http://ip-api.com/json').then( function (res) {
-          console.log(res);
 
-})
-}
-  navigator.geolocation.getCurrentPosition(locationHandler);
-
+  let userLat;
+  let userLng;
   let currentComponent = this;
 
-  function locationHandler (position) {
-   let userLat = position.coords.latitude;
-   let userLng = position.coords.longitude;
+     axios.get('https://api.ipdata.co').then(res => {
 
-
-    const fetchMeetups = () => {
-     let jsonp = require('jsonp');
-     jsonp(`https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public&lon=${userLng}&text=tech&radius=25&lat=${userLat}&key=543b1a4f397a53372c62665f145eb`, null, (err, data) => {
-       if (err) {
-         console.error(err.message);
-       } else {
-         currentComponent.setState({meetups: data.data.events });
-         if(currentComponent.state.meetups) {
-         let meetupData = currentComponent.state.meetups.slice(0,30);
-         let tempArr = [];
-         for (let i = 0; i < meetupData.length; i++) {
-           if (meetupData[i].venue && meetupData[i].name) {
-             let isLongString = false;
-             if (meetupData[i].description.length > 255) {
-               isLongString = true;
+      userLat = res.data.latitude;
+      userLng = res.data.longitude;
+       function fetchMeetups () {
+       let jsonp = require('jsonp');
+       jsonp(`https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public&lon=${userLng}&text=tech&radius=25&lat=${userLat}&key=543b1a4f397a53372c62665f145eb`, null, (err, data) => {
+         if (err) {
+           console.error(err.message);
+         } else {
+           currentComponent.setState({meetups: data.data.events });
+           if(currentComponent.state.meetups) {
+           let meetupData = currentComponent.state.meetups.slice(0,30);
+           let tempArr = [];
+           for (let i = 0; i < meetupData.length; i++) {
+             if (meetupData[i].venue && meetupData[i].name) {
+               let isLongString = false;
+               if (meetupData[i].description.length > 255) {
+                 isLongString = true;
+               }
+               else {
+                 isLongString = false;
+               }
+               let geojson = {
+                 "meetup": meetupData[i].name,
+                 "id": meetupData[i].id,
+                 "latitude": meetupData[i].venue.lat,
+                 "longitude": meetupData[i].venue.lon,
+                 "description": isLongString ? `${meetupData[i].description.slice(0,255)}...` : `${meetupData[i].description.slice(0,200)}`
+               }
+               tempArr.push(geojson);
              }
-             else {
-               isLongString = false;
-             }
-             let geojson = {
-               "meetup": meetupData[i].name,
-               "id": meetupData[i].id,
-               "latitude": meetupData[i].venue.lat,
-               "longitude": meetupData[i].venue.lon,
-               "description": isLongString ? `${meetupData[i].description.slice(0,255)}...` : `${meetupData[i].description.slice(0,200)}`
-             }
-             tempArr.push(geojson);
+           } // end of for loop
+           currentComponent.setState({geojson : tempArr});
            }
-         } // end of for loop
-         currentComponent.setState({geojson : tempArr});
          }
-       }
-     })
-   }
-   fetchMeetups();
-  }
+       })
+     }
+fetchMeetups();
+    }, "jsonp");
+
+  // navigator.geolocation.getCurrentPosition(locationHandler);
+
+
+  // const locationHandler = () => {
+    // userLat = position.coords.latitude;
+    // userLng = position.coords.longitude;
+
+
 
   // this.fetchMeetups("sydney");
+  // locationHandler();
 
 }
 
