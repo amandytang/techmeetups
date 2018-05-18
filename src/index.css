@@ -30,13 +30,14 @@ body, html {
   z-index: 100;
 }
 
-.mapboxgl-ctrl-logo {
+.mapboxgl-ctrl-logo, .mapboxgl-ctrl-attrib {
   display: none !important;
 }
 .controls {
   z-index: 999999;
   position: absolute;
-  right: 0;
+  right: 20px;
+  bottom: 20px;
 }
 .mapboxgl-ctrl {
 
