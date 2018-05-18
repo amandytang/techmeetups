@@ -23,6 +23,11 @@ setCity = (event) => {
   this.setState({textbox: event.target.value});
 }
 
+handleKeyPress = (event) => {
+  if(event.key == 'Enter'){
+    this.handleSubmit();
+ }
+}
 
 handleSubmit = () => {
 
@@ -155,6 +160,7 @@ fetchMeetups();
             placeholder="Search meetups by city"
             ref={(input) => { this.searchBar = input }}
             value={this.state.textbox}
+            onKeyPress={this.handleKeyPress}
             onChange={this.setCity}
           />
           <span tooltip="Search" id="search" flow="down">
