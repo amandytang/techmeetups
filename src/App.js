@@ -154,10 +154,12 @@ fetchMeetups();
             value={this.state.textbox}
             onChange={this.setCity}
           />
+          <span tooltip="Search" id="search" flow="down">
           <button
             className="searchButton"
             onClick={this.handleSubmit}
-          >Find</button>
+          ></button>
+          </span>
           </div>
         {this.props.children}
 
