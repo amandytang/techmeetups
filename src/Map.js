@@ -28,12 +28,12 @@ export default class Map extends Component {
     };
   }
 
-  componentDidMount() {
-    window.addEventListener('resize', this._resize);
-    this._resize();
+componentDidMount() {
+  window.addEventListener('resize', this._resize);
+  this._resize();
 }
 
-componentDidUpdate(){
+componentDidUpdate() {
   if (this.state.lat !== this.props.lat && this.state.lng !== this.props.lng) {
     this.setState({lat: this.props.lat});
     this.setState({lng: this.props.lng});
@@ -43,7 +43,7 @@ componentDidUpdate(){
         latitude: this.props.lat,
         longitude: this.props.lng
       }
-      });
+    });
   }
 }
   componentWillUnmount() {
@@ -61,19 +61,7 @@ componentDidUpdate(){
   };
 
   _updateViewport = (viewport) => {
-
     this.setState({viewport});
-
-      //   if (this.state.lng && this.state.lat) {
-      //     console.log(this.state.lng);
-      //     this.setState({
-      //     viewport: {
-      //       ...this.state.viewport,
-      //       latitude: this.state.lat,
-      //       longitude: this.state.lng
-      //     }
-      //   });
-      // }
   }
 
 
@@ -101,21 +89,7 @@ componentDidUpdate(){
       </Popup>
     );
   }
-//
-//   _goToCity = (lat,lng) => {
-//     if (lat, lng) {
-//        const viewport = {
-//         ...this.state.viewport,
-//         longitude: lng,
-//         latitude: lat,
-//         zoom: 11.4,
-//         transitionDuration: 3000,
-//         transitionInterpolator: new FlyToInterpolator(),
-//         transitionEasing: d3.easeCubic
-//       };
-//     this.setState({viewport});
-//   };
-// }
+
   _goToMarker = (meetup) => {
     this.setState({popupInfo: meetup});
       const viewport = {
