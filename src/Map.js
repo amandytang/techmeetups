@@ -37,6 +37,13 @@ componentDidUpdate(){
   if (this.state.lat !== this.props.lat && this.state.lng !== this.props.lng) {
     this.setState({lat: this.props.lat});
     this.setState({lng: this.props.lng});
+    this.setState({
+      viewport: {
+        ...this.state.viewport,
+        latitude: this.props.lat,
+        longitude: this.props.lng
+      }
+      });
   }
 }
   componentWillUnmount() {
