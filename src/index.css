@@ -77,7 +77,9 @@ body, html {
 
 .close-menu {
   display:inline-block;
-  float: right;
+  position: absolute;
+
+  right:0;
   padding: 5px;
   transition: 300ms ease-out;
 }
@@ -244,25 +246,31 @@ a {
 }
 
 #meetups-header {
-  height: 100px;
-  padding: 30px 20px 10px 65px !important;
+  height: 70px;
   font-weight: bold;
   color: #121212;
   background-color: #FBC02D;
   width: 100% !important;
-  font-size: 2.5em;
-  font-family: 'VT323', monospace;
+  font-size: 1.1em;
+  font-family: 'Roboto', sans-serif !important;
   letter-spacing: 1px;
   display: block;
-  text-transform: lowercase;
+  padding: 12px 10px 0px 15px;
+   margin: 0 auto !important;
+}
+#meetups-header p {
   margin: 0 auto !important;
-}
+  }
+ #tagline {
+   font-size: 0.65em;
+   padding-top: 6px !important;
 
+   padding-left: 6px;
+ }
 .accent {
-  font-family: 'Abel', sans-serif !important;
-  font-size: 0.80em;
-
-}
+  background-color: #FBC02D !important;
+  color: #121212 !important;padding: 2px;
+ }
 
 #meetups a {
   text-decoration: none;

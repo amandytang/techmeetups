@@ -27,13 +27,14 @@ const Routes = ( // App component holds the Navigation component - but how do I 
         } />
         <Route path="/meetup/:id" render={props =>
           <div>
+          <Navigation />
+
             <MeetupDetails />
           </div>
         } />
         <Route path="/oauth2" render={props =>
           <div>
-          <Auth />
-
+            <Auth />
           </div>
         } />
     </div>

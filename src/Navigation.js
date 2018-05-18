@@ -2,6 +2,7 @@ import React from 'react';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import { MeetupContext } from "./App";
+import Geocode from "react-geocode";
 
 
 class Navigation extends React.Component {
@@ -56,7 +57,8 @@ class MeetupList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      meetupData: []
+      meetupData: [],
+      suburb: ''
     };
   }
 
@@ -64,17 +66,28 @@ class MeetupList extends React.Component {
 
     return (
       <MeetupContext.Consumer>
-        {({ meetups, geojson }) => {
+        {({ meetups, geojson, lat, lng }) => {
 
           let _= require('underscore');
           let meetupData = _.sortBy(meetups.slice(0,30), 'local_date');
-
-
+          // reverse geocode to show the place
+          Geocode.fromLatLng(lat, lng).then(
+            response => {
+              const suburb = response.results[0].address_components[2].long_name;
+              if (this.state.suburb !== suburb) {
+               this.setState({suburb});
+               }
+            },
+            error => {
+              console.error(error);
+            }
+          );
           return (
 
           <div>
             <div id="meetups">
-              <div id="meetups-header">Tech<span className="accent">Meetups</span></div>
+              <div id="meetups-header"><p>&nbsp;Tech&nbsp;<span className="accent">Meetups&nbsp;</span></p>
+              <p id="tagline">near <span id="area">{this.state.suburb}</span></p></div>
               {meetupData.map( (meetup) => {
                 if (meetup.venue && meetup.local_date) {
                   return (
