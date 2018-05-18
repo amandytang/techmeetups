@@ -9,7 +9,6 @@
 body, html {
   margin: 0 !important;
   padding: 0 !important;
-  font-family: sans-serif;
   height: 100vh;
   overflow-x:hidden;
   overflow-y:hidden;
@@ -456,10 +455,19 @@ a {
 .mapboxgl-canvas {
   z-index: -23 !important;
 }
+.overlays {
+  cursor: default !important;
+}
+.mapboxgl-canvas:hover {
+  cursor: default !important;
+}
 .mapboxgl-marker {
   z-index: 88 !important;
   width: 25px;
   height: 25px;
+}
+.mapboxgl-marker:hover {
+  cursor: pointer;
 }
 .mapboxgl-popup {
   width: 320px;
