@@ -152,7 +152,7 @@ fetchMeetups();
       <div id="searchContainer">
       <input
             className="searchInput"
-            placeholder="Search a city"
+            placeholder="Search meetups by city"
             ref={(input) => { this.searchBar = input }}
             value={this.state.textbox}
             onChange={this.setCity}
