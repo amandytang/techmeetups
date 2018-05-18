@@ -5,8 +5,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import MeetupDetails from './MeetupDetails';
 import Navigation from './Navigation';
-import Map from './Map';
-import Auth from './Auth';
+ import Auth from './Auth';
 
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -17,8 +16,7 @@ const Routes = ( // App component holds the Navigation component - but how do I 
   <App >
     <Router>
     <div>
-    <Map />
-
+ 
         <Route exact path="/" render={props =>
           <div>
             <Navigation />

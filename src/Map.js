@@ -8,7 +8,7 @@ import {MeetupContext} from './App';
 
 const TOKEN = 'pk.eyJ1IjoidGVjaG1lZXQiLCJhIjoiY2pndWRpOHVnMW51dzJ3bWx2dWMwd3BjOSJ9.hsVtz9FaTpBnCRunS3evUQ';
 
-export default class App extends Component {
+export default class Map extends Component {
 
   constructor(props) {
     super(props);
@@ -22,7 +22,9 @@ export default class App extends Component {
         width: 500,
         height: 500
       },
-      popupInfo: null
+      popupInfo: null,
+      lat: '',
+      lng: ''
     };
   }
 
@@ -31,6 +33,12 @@ export default class App extends Component {
     this._resize();
 }
 
+componentDidUpdate(){
+  if (this.state.lat !== this.props.lat && this.state.lng !== this.props.lng) {
+    this.setState({lat: this.props.lat});
+    this.setState({lng: this.props.lng});
+  }
+}
   componentWillUnmount() {
     window.removeEventListener('resize', this._resize);
   }
@@ -46,8 +54,21 @@ export default class App extends Component {
   };
 
   _updateViewport = (viewport) => {
+
     this.setState({viewport});
+
+      //   if (this.state.lng && this.state.lat) {
+      //     console.log(this.state.lng);
+      //     this.setState({
+      //     viewport: {
+      //       ...this.state.viewport,
+      //       latitude: this.state.lat,
+      //       longitude: this.state.lng
+      //     }
+      //   });
+      // }
   }
+
 
   _renderMeetupMarker = (meetup, index) => {
     return (
@@ -73,20 +94,34 @@ export default class App extends Component {
       </Popup>
     );
   }
-
+//
+//   _goToCity = (lat,lng) => {
+//     if (lat, lng) {
+//        const viewport = {
+//         ...this.state.viewport,
+//         longitude: lng,
+//         latitude: lat,
+//         zoom: 11.4,
+//         transitionDuration: 3000,
+//         transitionInterpolator: new FlyToInterpolator(),
+//         transitionEasing: d3.easeCubic
+//       };
+//     this.setState({viewport});
+//   };
+// }
   _goToMarker = (meetup) => {
     this.setState({popupInfo: meetup});
-        const viewport = {
-            ...this.state.viewport,
-            longitude: meetup.longitude,
-            latitude: meetup.latitude,
-            zoom: 11.4,
-            transitionDuration: 3000,
-            transitionInterpolator: new FlyToInterpolator(),
-            transitionEasing: d3.easeCubic
-        };
-        this.setState({viewport});
-    };
+      const viewport = {
+        ...this.state.viewport,
+        longitude: meetup.longitude,
+        latitude: meetup.latitude,
+        zoom: 11.4,
+        transitionDuration: 3000,
+        transitionInterpolator: new FlyToInterpolator(),
+        transitionEasing: d3.easeCubic
+      };
+    this.setState({viewport});
+  };
 
   render() {
 
@@ -95,7 +130,7 @@ export default class App extends Component {
     return (
       <MeetupContext.Consumer>
 
-        {({ meetups, geojson }) => {
+        {({ meetups, geojson, lat, lng }) => {
 
           return (
             <MapGL
@@ -105,7 +140,7 @@ export default class App extends Component {
               mapboxApiAccessToken={TOKEN} >
                {geojson.map(this._renderMeetupMarker)}
                {this._renderPopup()}
-            </MapGL>
+             </MapGL>
           )
         }
       }

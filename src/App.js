@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Map from './Map';
 import Geocode from "react-geocode";
 import axios from 'axios';
 export const MeetupContext = React.createContext();
@@ -79,7 +80,6 @@ handleSubmit = () => {
 
 
 componentDidMount () {
-  // let jsonp = require('jsonp');
   this.searchBar.focus();
 
   let userLat;
@@ -90,6 +90,9 @@ componentDidMount () {
 
       userLat = res.data.latitude;
       userLng = res.data.longitude;
+      this.setState({lat: userLat});
+      this.setState({lng: userLng});
+
        function fetchMeetups () {
        let jsonp = require('jsonp');
        jsonp(`https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public&lon=${userLng}&text=tech&radius=25&lat=${userLat}&key=543b1a4f397a53372c62665f145eb`, null, (err, data) => {
@@ -161,6 +164,7 @@ fetchMeetups();
           ></button>
           </span>
           </div>
+          <Map lat={this.state.lat} lng={this.state.lng}/>
         {this.props.children}
 
       </MeetupContext.Provider>
