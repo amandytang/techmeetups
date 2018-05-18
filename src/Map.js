@@ -123,7 +123,7 @@ componentDidUpdate() {
                {this._renderPopup()}
 
                <div className="controls">
-                <NavigationControl onViewportChange={this._updateViewport} />
+                <NavigationControl showCompass={false} onViewportChange={this._updateViewport} />
               </div>
              </MapGL>
           )
