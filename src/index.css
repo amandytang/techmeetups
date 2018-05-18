@@ -11,9 +11,6 @@ body, html {
   font-family: sans-serif;
   height: 100vh;
 }
-.mapboxgl-ctrl, .mapboxgl-ctrl-logo {
-  display: none !important;
-}
 
  #root {
   width: 300px !important;
@@ -31,6 +28,20 @@ body, html {
   height: 40px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   z-index: 100;
+}
+
+.mapboxgl-ctrl-logo {
+  display: none !important;
+}
+.controls {
+  z-index: 999999;
+  position: absolute;
+  right: 0;
+}
+.mapboxgl-ctrl {
+
+    z-index: 9999999 !important;
+
 }
 
 #menu {
@@ -119,7 +130,7 @@ body, html {
   border:none;
   width: 30px;
   padding: 0 !important;
-  margin-left: 6px;
+  margin-left: 0;
 }
 
 /* LOGIN MODAL */
@@ -327,7 +338,7 @@ a {
   display: none;
   opacity: 0;
   margin-left: 5px;
-  margin-top: -2px;
+  margin-top: 0px;
 }
 [tooltip]::before {
   content: '';

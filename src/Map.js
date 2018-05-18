@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {FlyToInterpolator} from 'react-map-gl';
-import MapGL, {Marker, Popup} from 'react-map-gl';
+import MapGL, {Marker, Popup, NavigationControl} from 'react-map-gl';
 import MeetupPin from './meetup-pin';
 import MeetupInfo from './meetup-info';
 import * as d3 from 'd3';
@@ -121,6 +121,10 @@ componentDidUpdate() {
               mapboxApiAccessToken={TOKEN} >
                {geojson.map(this._renderMeetupMarker)}
                {this._renderPopup()}
+
+               <div className="controls">
+                <NavigationControl onViewportChange={this._updateViewport} />
+              </div>
              </MapGL>
           )
         }
