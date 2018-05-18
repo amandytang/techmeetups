@@ -74,6 +74,7 @@ class MeetupList extends React.Component {
 
           <div>
             <div id="meetups">
+              <div id="meetups-header">Tech<span className="accent">Meetups</span></div>
               {meetupData.map( (meetup) => {
                 if (meetup.venue && meetup.local_date) {
                   return (
