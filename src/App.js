@@ -24,7 +24,7 @@ setCity = (event) => {
 }
 
 handleKeyPress = (event) => {
-  if(event.key == 'Enter'){
+  if(event.key === 'Enter'){
     this.handleSubmit();
  }
 }

@@ -142,6 +142,7 @@ body, html {
 .ReactModal__Overlay--after-open {
   z-index: 20000 !important;
   background-color: rgba(0, 0, 0, 0.45) !important;
+  position:fixed !important;
 }
 .ReactModal__Content {
   width: 400px;
@@ -207,7 +208,7 @@ body, html {
 }
 .underline:hover {
   border-bottom: 2px solid #121212;
- 
+
 }
 
 .close-modal {
@@ -595,6 +596,20 @@ a {
 /* RESPONSIVENESS */
 
 @media only screen and (max-width: 480px) {
+  .ReactModal__Content {
+    left: 0 !important;
+    right: 0 !important;
+    width: 320px;
+  }
+}
 
-
+@media only screen and (max-width: 410px) {
+  .infoModalContent p {
+    font-size: 0.9em;
+    padding-top: 5px;
+  }
+  .searchInput {
+    padding-top: 2px;
+    font-size: 0.9em;
+  }
 }
