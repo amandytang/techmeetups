@@ -5,6 +5,7 @@ import MeetupPin from './meetup-pin';
 import MeetupInfo from './meetup-info';
 import * as d3 from 'd3';
 import {MeetupContext} from './App';
+import ReactModal from 'react-modal';
 
 const TOKEN = 'pk.eyJ1IjoidGVjaG1lZXQiLCJhIjoiY2pndWRpOHVnMW51dzJ3bWx2dWMwd3BjOSJ9.hsVtz9FaTpBnCRunS3evUQ';
 
@@ -25,7 +26,9 @@ export default class Map extends Component {
       popupInfo: null,
       lat: '',
       lng: ''
-    };
+    }
+    this.handleOpenModal = this.handleOpenModal.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
 componentDidMount() {
@@ -104,6 +107,12 @@ componentDidUpdate() {
     this.setState({viewport});
   };
 
+  handleCloseModal () {
+    this.setState({ showModal: false });
+  }
+  handleOpenModal () {
+    this.setState({ showModal: true });
+}
   render() {
 
     const {viewport} = this.state;
@@ -121,11 +130,22 @@ componentDidUpdate() {
               mapboxApiAccessToken={TOKEN} >
                {geojson.map(this._renderMeetupMarker)}
                {this._renderPopup()}
-
                <div className="controls">
                 <NavigationControl showCompass={false} onViewportChange={this._updateViewport} />
               </div>
-             </MapGL>
+              <ReactModal
+                 isOpen={this.state.showModal}
+                 contentLabel="Modal"
+                 ariaHideApp={false}
+              >
+                <img src="/close-menu.svg" className="close-modal" alt="close modal button" onClick={this.handleCloseModal}/>
+                <div className="infoModalContent">
+                  <div className="infoModalHeading">About Tech Meetups</div>
+                  <p>Please sign in to join this meetup.</p>
+                </div>
+              </ReactModal>
+              <button id="info" onClick={this.handleOpenModal}></button>
+            </MapGL>
           )
         }
       }

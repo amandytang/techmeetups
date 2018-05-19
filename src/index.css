@@ -36,7 +36,7 @@ body, html {
   display: none !important;
 }
 .controls {
-  z-index: 999999;
+  z-index: 9999;
   position: absolute;
   right: 20px;
   bottom: 20px;
@@ -520,7 +520,6 @@ a {
 .mapboxgl-popup-close-button {
   margin-top: 5px;
   transition: 300ms ease-out;
-
 }
 .mapboxgl-popup-close-button:hover {
   margin-top: 5px;
@@ -547,4 +546,21 @@ a {
   text-decoration: none;
   text-shadow: -1px -1px 0 #282d29;
   transition: all 250ms linear;
+}
+
+#info {
+  position:absolute;
+  background-color: #fff !important;
+  border: 0;
+  background-image: url("/info.svg");
+  right: 20px;
+  bottom: 90px;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.10);
+}
+
+#info:hover {
+  background-color: #f2f2f2 !important;
 }
