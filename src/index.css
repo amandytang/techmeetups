@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 @import url('https://fonts.googleapis.com/css?family=Abel');
-@import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah|VT323');
 
 * {
   box-sizing: border-box;
@@ -139,7 +138,7 @@ body, html {
   background-color: #fff;
 }
 
-/* LOGIN MODAL */
+/* MODALS */
 .ReactModal__Overlay--after-open {
   z-index: 20000 !important;
   background-color: rgba(0, 0, 0, 0.45) !important;
@@ -175,7 +174,7 @@ body, html {
   transform: scale(0.5) rotateX(30deg);
   transition: all 150ms ease-in;
 }
-.modalContent {
+.infoModalContent, .modalContent {
   text-align: center;
   padding: 0;
   margin: 0;
@@ -187,6 +186,30 @@ body, html {
   color: #121212;
   padding-top: 5px;
 }
+
+.map {
+  width: 100px;
+  height: 100px;
+  padding-top: 20px;
+}
+
+.infoModalContent p {
+  font-family: 'Abel', sans-serif;
+  font-size: 1.05em;
+  color: #121212;
+  padding: 0px 22px 0px 22px;
+}
+
+.infoModalContent p a {
+  color: #121212;
+   border-bottom: 1px dashed #121212;
+   font-style: italic;
+}
+.underline:hover {
+  border-bottom: 2px solid #121212;
+ 
+}
+
 .close-modal {
   display:inline-block;
   float: right;
@@ -197,7 +220,7 @@ body, html {
   cursor: pointer;
   opacity: 0.5;
 }
-.modalHeading {
+.infoModalHeading, .modalHeading {
   color: #121212;
   background-color: #FBC02D;
   font-weight: bold;
@@ -207,6 +230,10 @@ body, html {
   letter-spacing: 1px;
   padding: 10px 20px 10px 20px;
 
+}
+
+.infoModalHeading {
+  font-size: 1.15em;
 }
 .alignment-wrapper {
   position: absolute;
@@ -563,4 +590,11 @@ a {
 
 #info:hover {
   background-color: #f2f2f2 !important;
+}
+
+/* RESPONSIVENESS */
+
+@media only screen and (max-width: 480px) {
+
+
 }

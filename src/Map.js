@@ -141,7 +141,9 @@ componentDidUpdate() {
                 <img src="/close-menu.svg" className="close-modal" alt="close modal button" onClick={this.handleCloseModal}/>
                 <div className="infoModalContent">
                   <div className="infoModalHeading">About Tech Meetups</div>
-                  <p>Please sign in to join this meetup.</p>
+                  <img src="/map.svg" className="map" alt="map icon"/>
+                  <p>Easily find and join tech meetups near you on an interactive map!</p>
+                  <p>Tech Meetups is a project created by <a className="underline" href="https://amandytang.github.io/">Mandy Tang</a>,<br/> a web developer from Sydney.</p>
                 </div>
               </ReactModal>
               <button id="info" onClick={this.handleOpenModal}></button>
