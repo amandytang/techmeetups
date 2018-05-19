@@ -42,15 +42,15 @@ body, html {
   bottom: 20px;
 }
 .mapboxgl-ctrl {
-
-    z-index: 9999999 !important;
-
+  z-index: 9999999 !important;
 }
-
+.menu {outline:0;}
+.menu:focus img {
+  outline: auto;
+}
 #menu {
   margin-top: 8px;
   margin-left: 8px;
-
 }
 
 #menu:hover {

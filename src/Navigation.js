@@ -19,6 +19,11 @@ class Navigation extends React.Component {
       }));
     }
 
+    handleKeyPress = (event) => {
+      if(event.key == 'Enter'){
+        this.handleClick();
+     }
+    }
 // componentDidMount() {
 // could we say... if (this.state.meetup)
 //       const toggleHeader = () => {
@@ -38,7 +43,7 @@ class Navigation extends React.Component {
         {({ meetups, geojson }) => {
           return (
             <div id="nav-wrapper">
-              <div id="navbar"><span tooltip="Menu" flow="down"><img src="/menu.svg" alt="menu" id="menu" onClick={this.handleClick} /></span></div>{this.state.isToggleOn ? (<div id="sidebar" style={{"transition": "transform 0.4s ease"}}></div>)
+              <div id="navbar"><span className="menu" tooltip="Menu" flow="down" tabindex="0"             onKeyPress={this.handleKeyPress}><img src="/menu.svg" alt="menu" id="menu" onClick={this.handleClick}/></span></div>{this.state.isToggleOn ? (<div id="sidebar" style={{"transition": "transform 0.4s ease"}}></div>)
               :
               (<div id="sidebar" className="sidebar-shadow" style={{"transform": "translate3d(0px, 0, 0)", "transition": "transform 0.4s ease"}}>
                 <img src="/close-menu.svg" className="close-menu" alt="collapse sidebar button" onClick={this.handleClick}/>
@@ -70,13 +75,13 @@ class MeetupList extends React.Component {
 
           let _= require('underscore');
           let meetupData = _.sortBy(meetups.slice(0,30), 'local_date');
-          // reverse geocode to show the place
+          // reverse geocoding
           Geocode.fromLatLng(lat, lng).then(
             response => {
               const suburb = response.results[0].address_components[2].long_name;
               if (this.state.suburb !== suburb) {
-               this.setState({suburb});
-               }
+                this.setState({suburb});
+              }
             },
             error => {
               console.error(error);
