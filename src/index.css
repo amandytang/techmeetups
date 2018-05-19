@@ -9,6 +9,7 @@ body, html {
   margin: 0 !important;
   padding: 0 !important;
   height: 100vh;
+  min-height: 100vh;
   overflow-x:hidden;
   overflow-y:hidden;
 }
@@ -106,11 +107,11 @@ body, html {
   vertical-align: top;
   margin-top: 5px !important;
   display:inline-block;
-  min-width: 190px;
+  min-width: 192px;
   margin-right: 5px;
   margin-top: 0;
   padding-top: 0;
-  padding-left: 2px;
+  padding-left: 1px;
   border:none;
   font-size: 1em;
   font-family: 'Abel', sans-serif;
@@ -594,7 +595,6 @@ a {
 }
 
 /* RESPONSIVENESS */
-
 @media only screen and (max-width: 480px) {
   .ReactModal__Content {
     left: 0 !important;
