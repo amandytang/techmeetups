@@ -3,7 +3,7 @@ import { MeetupContext } from "./App";
 import Moment from 'react-moment';
 import moment from 'moment';
 import ReactModal from 'react-modal';
-
+import axios from 'axios';
 
 
 class MeetupDetails extends React.Component {
@@ -31,7 +31,6 @@ class MeetupDetails extends React.Component {
 
 // Failed to load https://api.meetup.com/2/rsvp: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
 
-      const proxyurl = "https://cors-anywhere.herokuapp.com/";
       const url = `https://api.meetup.com/2/rsvp/?access_token=${token}`;
       const url2 = `https://api.meetup.com/2/rsvp/`;
 
@@ -78,25 +77,38 @@ class MeetupDetails extends React.Component {
 //
 // }
 // joinMeetup();
+axios({
+  method: 'post',
+  url: 'https://api.meetup.com/2/rsvp/',
+  headers: {'Authorization': `Bearer ${token}`},
+  params: {
+    rsvp: "yes",
+    event_id: id
+  }
+});
+
+//
+//      fetch("https://api.meetup.com/2/rsvp/", {
+//         method: 'POST',
+//         headers: {
+//     //     'Accept': 'application/json, text/plain, */*',
+//         'Authorization': `Bearer ${token}`,
+//         'Content-Type': 'text/plain'
+//     // // // // },
+//     //    headers: {
+//     //   'Authorization': 'Bearer ' + token
+//     //           },
+//        // withCredentials: true
+//        // credentials: 'include',
+// },
+//        body:
+//        `rsvp=yes&event_id=${id}`
+//          // 'rsvp=yes&event_id=' + id
+//        // })
+//      }).then(res => res.json()).catch(error => console.error('Error:', error))
 
 
-     fetch(url, {
-        method: 'POST',
-    //     headers: {
-    //     'Accept': 'application/json, text/plain, */*',
-    //     'Content-Type': 'application/json'
-    // // // },
-    //    headers: {
-    //   'Authorization': 'Bearer ' + token
-    //           },
-       // withCredentials: true
-       // credentials: 'include',
 
-       body:
-       // JSON.stringify({
-         'rsvp=yes&event_id=' + id
-       // })
-     }).then(res => res.json()).catch(error => console.error('Error:', error))
 
    } else {
      this.setState({ showModal: true });
@@ -143,7 +155,7 @@ class MeetupDetails extends React.Component {
                 <div className="modalHeading">Join {this.state.selectedMeetup.name}</div>
                 <p>Please sign in to join this meetup.</p>
               <img src="/meetup.svg" className="meetup-logo" alt="meetup logo"/>
-                  <div className="alignment-wrapper"><a href={"https://secure.meetup.com/oauth2/authorize?client_id=f551auo99eqakj1e68270s47b3&response_type=token&redirect_uri=http://localhost:3000/oauth2/&state=" + this.state.selectedMeetup.id}><button className="signIn">Sign in with Meetup.com</button></a></div></div>
+                  <div className="alignment-wrapper"><a href={"https://secure.meetup.com/oauth2/authorize?client_id=f551auo99eqakj1e68270s47b3&response_type=token&scope=rsvp+ageless&redirect_uri=http://localhost:3000/oauth2/&state=" + this.state.selectedMeetup.id}><button className="signIn">Sign in with Meetup.com</button></a></div></div>
               </ReactModal>
               <div id="nav-wrapper">
                 <div id="navbar"><span tooltip="Menu" flow="down"><img src="/menu.svg" alt="menu" id="menu" onClick={this.handleClick} /></span></div>
