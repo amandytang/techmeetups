@@ -20,7 +20,6 @@ class MeetupDetails extends React.Component {
      this.handleOpenModal = this.handleOpenModal.bind(this);
      this.handleCloseModal = this.handleCloseModal.bind(this);
    }
-// curl -i -X OPTIONS -H "Origin: http://localhost:3000/meetup/250024077" \ -H 'Access-Control-Request-Method: POST' \ -H 'Access-Control-Request-Headers: Content-Type, Authorization' \ "https://api.meetup.com/2/rsvp"
 
    handleOpenModal () {
      // what happens when the user clicks join. We shouldn't open the modal if they have already got a token, and should actually let them join the meetup here i.e. make the api call
@@ -38,11 +37,11 @@ class MeetupDetails extends React.Component {
 
 // if I don't use proxy, I get 405. If I do, I get 400 (bad request)
 // possible issues: fetching wrong url, sending wrong headers, CORS, not using the right parameters, not sending the parameters correctly...
-      // axios({ method: 'POST',
-      //   url: url,
-      //   // headers: {Authorization: `Bearer ${token}`},
-      //   data: { rsvp: 'yes', event_id: id } })
-      //   .then(res => res.json()).catch(error => console.error('Error:', error))
+    // axios({ method: 'POST',
+    //   url: url,
+    //   // headers: {Authorization: `Bearer ${token}`},
+    //   data: { rsvp: 'yes', event_id: id } })
+    //   .then(res => res.json()).catch(error => console.error('Error:', error))
 
 
     //   var request = require('request');
@@ -130,7 +129,6 @@ class MeetupDetails extends React.Component {
           if (selectedMeetup && (selectedMeetup !== this.state.selectedMeetup)) {
             this.setState({selectedMeetup});
           }
-
         }
         if (this.state.selectedMeetup.venue && this.state.selectedMeetup.description) {
           return (
@@ -152,13 +150,14 @@ class MeetupDetails extends React.Component {
                 {this.state.isToggleOn ? (<div id="sidebar" style={{"transition": "transform 0.4s ease"}}></div>)
                 :
                 (<div id="sidebar" className="sidebar-shadow" style={{"transform": "translate3d(0px, 0, 0)", "transition": "transform 0.4s ease"}}>
-                  <img src="/close-menu.svg" className="close-menu" alt="collapse sidebar button" onClick={this.handleClick}/>
+                  <span tabIndex="0"><img src="/close-menu.svg" className="close-menu" alt="collapse sidebar button" onClick={this.handleClick}/></span>
                     <div className="meetupDetailsName">{this.state.selectedMeetup.name}</div>
                     <div className="meetupInfo">
+                      <p className="group"><b>Organiser:</b> {this.state.selectedMeetup.group.name}</p>
                       <p><b>Date:</b> <Moment format="dddd, MMM Do YYYY">{this.state.selectedMeetup.local_date}</Moment></p>
                       <p><b>Time:</b> {moment(this.state.selectedMeetup.local_time, "HH:mm").format('LT')}</p>
                       <p><b>Venue:</b> {this.state.selectedMeetup.venue.address_1}</p>
-                      <p><b>{this.state.selectedMeetup.yes_rsvp_count}</b> attending</p>
+                      <p><b>{this.state.selectedMeetup.yes_rsvp_count}</b> {this.state.selectedMeetup.group.who} attending</p>
                       <button className="meetupJoin" id={this.state.selectedMeetup.id} onClick={this.handleOpenModal}>Join</button>
                       </div>
                       <div className="meetupDetailsContent">
