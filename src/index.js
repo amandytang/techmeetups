@@ -12,15 +12,14 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 const Routes = (
   <Router>
     <App >
+    <Navigation />
       <div>
         <Route exact path="/" render={props =>
           <div>
-            <Navigation />
           </div>
         } />
         <Route path="/meetup/:id" render={props =>
           <div>
-            <Navigation />
             <MeetupDetails />
           </div>
         } />
