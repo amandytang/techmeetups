@@ -35,7 +35,7 @@ class MeetupDetails extends React.Component {
         }
       }).then( (response) => {
         if (this.state.selectedMeetup.group.name) {
-          Alert.success(`Success! You are now a member of the group, ${this.state.selectedMeetup.group.name}.`, {
+          Alert.success(`Success! You are now a member of the group, ${this.state.selectedMeetup.group.name}. Don’t forget to join the meetup if that’s what you’re into.`, {
             position: 'top',
             effect: 'flip',
             beep: false,
@@ -45,16 +45,21 @@ class MeetupDetails extends React.Component {
         }
       })
       .catch( (error) => {
-        Alert.warning(`Sorry, we couldn't add you to this group. They might have special requirements that you can read about <a href="https://www.meetup.com/${groupName}" target="_blank" rel="noopener">here</a>.`, {
-          position: 'top',
-          effect: 'flip',
-          beep: false,
-          html: true,
-          timeout: 'none'
-        });
+      // if API returns 401 error, access token has likely expired - so trigger reauthorisation modal
+        if (error.toString().includes('401')) {
+          this.setState({ showModal: true });
+        }
+
+        if (error.toString().includes('400')) {
+          Alert.warning(`Sorry, we couldn't add you to this group. They might have special requirements that you can read about <a href="https://www.meetup.com/${groupName}" target="_blank" rel="noopener">here</a>.`, {
+            position: 'top',
+            effect: 'flip',
+            beep: false,
+            html: true,
+            timeout: 'none'
+          });
+        }
       });
-
-
 
     } else {
       this.setState({ showModal: true });
@@ -86,13 +91,19 @@ class MeetupDetails extends React.Component {
         }
       })
       .catch( (error) => {
-        Alert.warning("Sorry, we couldn't add you to this meetup. You might need to become a member of the group that's hosting it first.", {
-          position: 'top',
-          effect: 'flip',
-          beep: false,
-          html: true,
-          timeout: 'none'
-        });
+        if (error.toString().includes('401')) {
+          this.setState({ showModal: true });
+        }
+
+        if (error.toString().includes('400')) {
+          Alert.warning("Sorry, we couldn't add you to this meetup. You might need to become a member of the group that's hosting it first.", {
+            position: 'top',
+            effect: 'flip',
+            beep: false,
+            html: true,
+            timeout: 'none'
+          });
+        }
       });
 
     } else {
