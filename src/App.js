@@ -31,54 +31,57 @@ class App extends React.Component {
 
     Geocode.setApiKey("AIzaSyCsKztr2SzD8TrNkG-W4ruL2cLBcxf7SEU");
 
-    Geocode.fromAddress(this.state.textbox).then(
-      response => {
-        const { lat, lng } = response.results[0].geometry.location;
-        this.setState({lat});
-        this.setState({lng});
+    if (this.state.textbox) {
 
-        let currentComponent = this;
+      Geocode.fromAddress(this.state.textbox).then(
+        response => {
+          const { lat, lng } = response.results[0].geometry.location;
+          this.setState({lat});
+          this.setState({lng});
 
-         const fetchMeetups = () => {
-          let jsonp = require('jsonp');
-          jsonp(`https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public&lon=${lng}&text=tech&radius=25&lat=${lat}&key=543b1a4f397a53372c62665f145eb`, null, (err, data) => {
-            if (err) {
-              console.error(err.message);
-            } else {
-              currentComponent.setState({meetups: data.data.events });
-              if(currentComponent.state.meetups) {
-              let meetupData = currentComponent.state.meetups.slice(0,30);
-              let tempArr = [];
-              for (let i = 0; i < meetupData.length; i++) {
-                if (meetupData[i].venue && meetupData[i].name) {
-                  let isLongString = false;
-                  if (meetupData[i].description.length > 255) {
-                    isLongString = true;
+          let currentComponent = this;
+
+           const fetchMeetups = () => {
+            let jsonp = require('jsonp');
+            jsonp(`https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public&lon=${lng}&text=tech&radius=25&lat=${lat}&key=543b1a4f397a53372c62665f145eb`, null, (err, data) => {
+              if (err) {
+                console.error(err.message);
+              } else {
+                currentComponent.setState({meetups: data.data.events });
+                if(currentComponent.state.meetups) {
+                let meetupData = currentComponent.state.meetups.slice(0,30);
+                let tempArr = [];
+                for (let i = 0; i < meetupData.length; i++) {
+                  if (meetupData[i].venue && meetupData[i].name) {
+                    let isLongString = false;
+                    if (meetupData[i].description.length > 255) {
+                      isLongString = true;
+                    }
+                    else {
+                      isLongString = false;
+                    }
+                    let geojson = {
+                      "meetup": meetupData[i].name,
+                      "id": meetupData[i].id,
+                      "latitude": meetupData[i].venue.lat,
+                      "longitude": meetupData[i].venue.lon,
+                      "description": isLongString ? `${meetupData[i].description.slice(0,255)}...` : `${meetupData[i].description.slice(0,200)}`
+                    }
+                    tempArr.push(geojson);
                   }
-                  else {
-                    isLongString = false;
-                  }
-                  let geojson = {
-                    "meetup": meetupData[i].name,
-                    "id": meetupData[i].id,
-                    "latitude": meetupData[i].venue.lat,
-                    "longitude": meetupData[i].venue.lon,
-                    "description": isLongString ? `${meetupData[i].description.slice(0,255)}...` : `${meetupData[i].description.slice(0,200)}`
-                  }
-                  tempArr.push(geojson);
+                }
+                currentComponent.setState({geojson : tempArr});
                 }
               }
-              currentComponent.setState({geojson : tempArr});
-              }
-            }
-          })
+            })
+          }
+          fetchMeetups(this.state.textbox);
+        },
+        error => {
+          console.error(error);
         }
-        fetchMeetups(this.state.textbox);
-      },
-      error => {
-        console.error(error);
-      }
-    )
+      )
+    }
   }
 
   componentDidMount () {
@@ -138,9 +141,11 @@ class App extends React.Component {
     return (
       <MeetupContext.Provider value={this.state}>
         <div id="searchContainer">
+        <form>
           <input
             className="searchInput"
             placeholder="Search meetups by city"
+            pattern=".{1,}" required title="1 character minimum"
             ref={(input) => { this.searchBar = input }}
             value={this.state.textbox}
             onKeyPress={this.handleKeyPress}
@@ -152,6 +157,7 @@ class App extends React.Component {
             onClick={this.handleSubmit}
           ></button>
           </span>
+        </form>
         </div>
         <Map lat={this.state.lat} lng={this.state.lng}/>
         {this.props.children}
