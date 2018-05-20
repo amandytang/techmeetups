@@ -3,6 +3,10 @@ import './App.css';
 import Map from './Map';
 import Geocode from "react-geocode";
 import axios from 'axios';
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/flip.css';
+
 export const MeetupContext = React.createContext();
 
 class App extends React.Component {
@@ -161,6 +165,8 @@ class App extends React.Component {
         </div>
         <Map lat={this.state.lat} lng={this.state.lng}/>
         {this.props.children}
+        <Alert stack={{limit: 2}} />
+
       </MeetupContext.Provider>
     );
   }

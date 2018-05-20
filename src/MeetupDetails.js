@@ -4,6 +4,7 @@ import Moment from 'react-moment';
 import moment from 'moment';
 import ReactModal from 'react-modal';
 import axios from 'axios';
+import Alert from 'react-s-alert';
 
 
 class MeetupDetails extends React.Component {
@@ -22,92 +23,42 @@ class MeetupDetails extends React.Component {
    }
 
    handleOpenModal () {
-     // what happens when the user clicks join. We shouldn't open the modal if they have already got a token, and should actually let them join the meetup here i.e. make the api call
-     // need to handle what happens if the token has expired (get a refresh token)
-     // if successful, change button to joined and make it green
-     if (localStorage.getItem("token")) {
+      // if successful, change button to joined and make it green
+    if (localStorage.getItem("token")) {
       let token = localStorage.getItem("token");
       let id = window.location.href.match(/[^\/]+$/)[0];
 
-// Failed to load https://api.meetup.com/2/rsvp: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
-
-      const url = `https://api.meetup.com/2/rsvp/?access_token=${token}`;
-      const url2 = `https://api.meetup.com/2/rsvp/`;
-
-// if I don't use proxy, I get 405. If I do, I get 400 (bad request)
-// possible issues: fetching wrong url, sending wrong headers, CORS, not using the right parameters, not sending the parameters correctly...
-    // axios({ method: 'POST',
-    //   url: url,
-    //   // headers: {Authorization: `Bearer ${token}`},
-    //   data: { rsvp: 'yes', event_id: id } })
-    //   .then(res => res.json()).catch(error => console.error('Error:', error))
-
-
-    //   var request = require('request');
-    //
-    //   var options = {
-    //   url: url,
-    //   rsvp: 'yes',
-    //   event_id: id
-    // };
-    //
-    // function callback(error, response, body) {
-    //     console.log('error:', error); // Print the error if one occurred
-    //     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-    //     console.log('body:', body); // Print the HTML for the Google homepage.
-    //   };
-    //
-    //   request(options, callback);
-
-// const joinParams = {
-//   method: 'POST',    // 405 - method not allowed - is it this one??
-//   rsvp: 'yes',
-//   event_id: id
-// };
-//
-// const joinMeetup = () => {
-//
-// jsonp(url2, joinParams, (function (err, results) {
-//   if (err) {
-//     console.error(err.message);
-//   } else {
-//   console.log(results);
-//   }
-// }));
-//
-// }
-// joinMeetup();
-axios({
-  method: 'post',
-  url: 'https://api.meetup.com/2/rsvp/',
-  headers: {'Authorization': `Bearer ${token}`},
-  params: {
-    rsvp: "yes",
-    event_id: id
-  }
-});
-
-//
-//      fetch("https://api.meetup.com/2/rsvp/", {
-//         method: 'POST',
-//         headers: {
-//     //     'Accept': 'application/json, text/plain, */*',
-//         'Authorization': `Bearer ${token}`,
-//         'Content-Type': 'text/plain'
-//     // // // // },
-//     //    headers: {
-//     //   'Authorization': 'Bearer ' + token
-//     //           },
-//        // withCredentials: true
-//        // credentials: 'include',
-// },
-//        body:
-//        `rsvp=yes&event_id=${id}`
-//          // 'rsvp=yes&event_id=' + id
-//        // })
-//      }).then(res => res.json()).catch(error => console.error('Error:', error))
-
-
+      axios({
+        method: 'post',
+        url: 'https://api.meetup.com/2/rsvp/',
+        headers: {'Authorization': `Bearer ${token}`},
+        params: {
+          rsvp: "yes",
+          event_id: id
+        }
+      }).then( (response) => {
+        if (this.state.selectedMeetup.name) {
+          Alert.success(`Success! You're going to ${this.state.selectedMeetup.name}.`, {
+            position: 'top',
+            effect: 'flip',
+            beep: false,
+            html: true,
+            timeout: 'none'
+          });
+        }
+      })
+      .catch( (error) => {
+        console.log(error);
+        // handle when need to become member of group first
+        // handle when
+        Alert.warning("Sorry, we couldn't add you to this meetup. You might need to become a member of the group that's hosting it first.", {
+          position: 'top',
+          effect: 'flip',
+          beep: false,
+          html: true,
+          timeout: 'none'
+        });
+      });
 
 
    } else {

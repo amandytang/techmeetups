@@ -426,6 +426,7 @@ a {
   font-family: 'Roboto', sans-serif;
   color: #121212;
 }
+
 /* TOOLTIPS */
 [tooltip] {
   position: relative;
@@ -602,6 +603,17 @@ a {
   border-bottom: 2px solid #FBC02D;
   color: rgba(18,18,18,1);
   font-style: italic;
+}
+
+.s-alert-warning {
+  background-color: #e9547b !important;
+}
+.s-alert-box-inner {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.9em;
+}
+.s-alert-show {
+  z-index: 9999909 !important;
 }
 
 .mapboxgl-popup-close-button {
