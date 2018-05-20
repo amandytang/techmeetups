@@ -8,18 +8,20 @@
 body, html {
   margin: 0 !important;
   padding: 0 !important;
-   min-height: 100vh;
+  min-height: 100vh;
   overflow-x:hidden;
   overflow-y:hidden;
 }
 
- #root {
+#root {
   width: 300px !important;
 }
+
 #wrapper {
   width: 300px !important;
   z-index: 1000;
 }
+
 #navbar {
   width: 280px !important;
   position: absolute;
@@ -34,19 +36,24 @@ body, html {
 .mapboxgl-ctrl-logo, .mapboxgl-ctrl-attrib {
   display: none !important;
 }
+
 .controls {
   z-index: 9999;
   position: absolute;
   right: 20px;
   bottom: 20px;
 }
+
 .mapboxgl-ctrl {
   z-index: 9999999 !important;
 }
+
 .menu {outline:0;}
+
 .menu:focus img {
   outline: auto;
 }
+
 #menu {
   margin-top: 8px;
   margin-left: 8px;
@@ -55,6 +62,7 @@ body, html {
 #menu:hover {
   cursor: pointer;
 }
+
 #nav-wrapper {
   z-index: 100 !important;
 }
@@ -78,7 +86,6 @@ body, html {
 .close-menu {
   display:inline-block;
   position: absolute;
-
   right:0;
   padding: 5px;
   transition: 300ms ease-out;
@@ -165,22 +172,24 @@ body, html {
   -webkit-transform: scale(1) rotateX(0deg);
     transform: scale(1) rotateX(0deg);
     transition: all 150ms ease-in;
-  }
-  .ReactModal__Overlay--before-close {
-    opacity: 0;
-  }
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
 
 .ReactModal__Content--before-close {
   -webkit-transform: scale(0.5) rotateX(30deg);
   transform: scale(0.5) rotateX(30deg);
   transition: all 150ms ease-in;
 }
+
 .infoModalContent, .modalContent {
   text-align: center;
   padding: 0;
   margin: 0;
-
 }
+
 .modalContent p {
   font-family: 'Roboto', sans-serif;
   font-size: 0.9em;
@@ -200,15 +209,14 @@ body, html {
   color: #121212;
   padding: 0px 22px 0px 22px;
 }
-
 .infoModalContent p a {
   color: #121212;
-   border-bottom: 1px dashed #121212;
-   font-style: italic;
+  border-bottom: 2px solid #FBC02D;
+  font-style: italic;
 }
+
 .underline:hover {
   border-bottom: 2px solid #121212;
-
 }
 
 .close-modal {
@@ -221,6 +229,7 @@ body, html {
   cursor: pointer;
   opacity: 0.5;
 }
+
 .infoModalHeading, .modalHeading {
   color: #121212;
   background-color: #FBC02D;
@@ -230,20 +239,22 @@ body, html {
   font-family: 'Abel', sans-serif;
   letter-spacing: 1px;
   padding: 10px 20px 10px 20px;
-
 }
 
 .infoModalHeading {
   font-size: 1.15em;
 }
+
 .alignment-wrapper {
   position: absolute;
   bottom: 25px;
   width: 100%;
 }
+
 a {
   text-decoration: none !important;
 }
+
 .signIn {
   width: 88%;
   color: white;
@@ -256,6 +267,7 @@ a {
   border-radius: 5px;
   font-family: 'Roboto', sans-serif;
 }
+
 .signIn:hover {
   background: #bd4958;
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -265,15 +277,13 @@ a {
   text-shadow: -1px -1px 0 #a73e4b;
   transition: all 250ms linear;
 }
+
 .meetup-logo {
   padding-top: 15px;
   padding-bottom: 30px;
 }
 
 /* MEETUPS LIST */
-#meetups {
-}
-
 #meetups-header {
   height: 70px;
   font-weight: bold;
@@ -287,14 +297,16 @@ a {
   padding: 12px 10px 0px 15px;
    margin: 0 auto !important;
 }
+
 #meetups-header p {
   margin: 0 auto !important;
-  }
- #tagline {
-   font-size: 0.65em;
-   padding-top: 6px !important;
-   padding-left: 6px;
- }
+}
+
+#tagline {
+ font-size: 0.65em;
+ padding-top: 6px !important;
+ padding-left: 6px;
+}
 .accent {
   background-color: #FBC02D !important;
   color: #121212 !important;padding: 2px;
@@ -310,9 +322,13 @@ a {
 }
 
 .meetupNames {
-  font-size: 0.8em;
+  font-size: 0.85em;
   font-family: 'Roboto', sans-serif;
   color: #121212;
+}
+
+.members {
+  font-style: italic;
 }
 
 .meetupContent {
@@ -322,9 +338,14 @@ a {
   border-bottom: 1px solid #ddd;
   font-weight: normal;
   transition: all 150ms linear;
-
 }
 
+.groupName {
+  padding-bottom: 6px;
+  font-size: 0.95em;
+  color: #121212;
+
+}
 .meetupContent:hover {
   background-color: #f9f9f9;
   cursor: pointer;
@@ -335,9 +356,9 @@ a {
   padding-bottom: 2px;
   margin: 0;
   font-weight: normal;
-  font-size: 0.95em;
+  font-size: 0.90em;
   font-family: 'Roboto', sans-serif;
-  color: rgb(80, 80, 80);
+  color: rgba(18,18,18,0.66);
 }
 
 /* MEETUP DETAILS */
@@ -348,8 +369,9 @@ a {
   color: #121212;
   border-bottom: 1px solid #ddd;
 }
+
 .meetupDetailsName {
-  padding: 10px 20px 10px 20px !important;
+  padding: 10px 25px 10px 20px !important;
   font-weight: bold;
   margin: 0px !important;
   color: #121212;
@@ -359,6 +381,7 @@ a {
   font-family: 'Abel', sans-serif;
   letter-spacing: 1px;
 }
+
 .meetupJoin {
   margin: 20px auto 20px auto;
   display: block;
@@ -370,6 +393,7 @@ a {
   transition: all 150ms linear;
   color: #fff;
 }
+
 .meetupJoin:hover {
   background: #3b433d;
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -379,8 +403,22 @@ a {
   text-shadow: -1px -1px 0 #282d29;
   transition: all 250ms linear;
 }
+
 .meetupDetailsContent {
   padding: 0px 20px 10px 20px !important;
+}
+
+#meetupDescription {
+  overflow-x: hidden;
+}
+
+#meetupDescription a {
+  border-bottom: 2px solid #FBC02D;
+  color: rgba(18,18,18,1);
+  font-style: italic;
+}
+#meetupDescription a:hover {
+  border-bottom: 2px solid #121212;
 }
 
 .meetupDetailsContent p {
@@ -406,11 +444,13 @@ a {
   margin-left: 5px;
   margin-top: 0px;
 }
+
 [tooltip]::before {
   content: '';
   border: 5px solid transparent;
   z-index: 1001;
 }
+
 [tooltip]::after {
   content: attr(tooltip);
   font-family: 'Roboto', sans-serif;
@@ -437,15 +477,16 @@ a {
   border-top-width: 0;
   border-bottom-color: #333;
 }
+
 [tooltip][flow^="down"]::after {
   top: calc(100% + 5px);
 }
+
 [tooltip][flow^="down"]::before,
 [tooltip][flow^="down"]::after {
   left: 50%;
   transform: translate(-50%, .5em);
 }
-
 
 /* KEYFRAMES */
 @keyframes tooltips-vert {
@@ -483,30 +524,37 @@ a {
 .mapboxgl-canvas {
   z-index: -23 !important;
 }
+
 .overlays {
   cursor: default !important;
 }
+
 .mapboxgl-canvas:hover {
   cursor: default !important;
 }
+
 .mapboxgl-marker {
   z-index: 88 !important;
   width: 25px;
   height: 25px;
 }
+
 .mapboxgl-marker:hover {
   cursor: pointer;
 }
+
 .mapboxgl-popup {
   width: 320px;
   z-index: 88 !important;
 }
+
 .mapboxgl-popup-content {
   background-color: #fff;
   padding: 0;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   border-radius: 0px !important;
 }
+
 .mapboxgl-popup-content h3 {
   padding: 10px;
   padding-left: 20px;
@@ -520,22 +568,26 @@ a {
   font-family: 'Abel', sans-serif;
   letter-spacing: 1px;
 }
+
 .mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
 .mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
 .mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
   border-bottom-color: #FBC02D;
-  }
+}
+
 .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
 .mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
 .mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
   border-top-color: #fff;
-  }
+}
+
 .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
   border-right-color: #fff;
-  }
+}
 .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
   border-left-color: #fff;
-  }
+}
+
 #description p {
   text-align: justify;
   padding-left: 20px;
@@ -545,10 +597,18 @@ a {
   color: #16161d;
   font-family: 'Roboto', sans-serif;
 }
+
+#description p a {
+  border-bottom: 2px solid #FBC02D;
+  color: rgba(18,18,18,1);
+  font-style: italic;
+}
+
 .mapboxgl-popup-close-button {
   margin-top: 5px;
   transition: 300ms ease-out;
 }
+
 .mapboxgl-popup-close-button:hover {
   margin-top: 5px;
   background-color: #FBC02D;

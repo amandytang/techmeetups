@@ -105,6 +105,7 @@ class MeetupList extends React.Component {
                       <div className="meetupContent" id={meetup.id} >
                         <div className="meetupNames">
                           <div className="meetupName">{meetup.name}</div>
+                          <div className="groupName">{meetup.group.name}</div>
                           <p><b>Date:</b> <Moment format="dddd, MMM Do YYYY">{meetup.local_date}</Moment></p>
                           <p><b>Venue:</b> {meetup.venue.address_1}</p>
                         </div>

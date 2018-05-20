@@ -5,21 +5,14 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import MeetupDetails from './MeetupDetails';
 import Navigation from './Navigation';
-import Map from './Map';
 import Auth from './Auth';
-
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-
-const Routes = ( // App component holds the Navigation component - but how do I keep the drawer open when navigating back?
-
-
-    <Router>
+const Routes = (
+  <Router>
     <App >
-
-     <div>
-
+      <div>
         <Route exact path="/" render={props =>
           <div>
             <Navigation />
@@ -27,8 +20,7 @@ const Routes = ( // App component holds the Navigation component - but how do I 
         } />
         <Route path="/meetup/:id" render={props =>
           <div>
-          <Navigation />
-
+            <Navigation />
             <MeetupDetails />
           </div>
         } />
@@ -37,14 +29,10 @@ const Routes = ( // App component holds the Navigation component - but how do I 
             <Auth />
           </div>
         } />
-    </div>
+      </div>
     </App>
-
-   </Router>
+  </Router>
 );
-
 
 ReactDOM.render(Routes, document.getElementById('root'));
 registerServiceWorker();
-
-            // {localStorage.setItem("hello",hello)}

@@ -150,14 +150,14 @@ class MeetupDetails extends React.Component {
                 {this.state.isToggleOn ? (<div id="sidebar" style={{"transition": "transform 0.4s ease"}}></div>)
                 :
                 (<div id="sidebar" className="sidebar-shadow" style={{"transform": "translate3d(0px, 0, 0)", "transition": "transform 0.4s ease"}}>
-                  <span tabIndex="0"><img src="/close-menu.svg" className="close-menu" alt="collapse sidebar button" onClick={this.handleClick}/></span>
+                  <img src="/close-menu.svg" className="close-menu" alt="collapse sidebar button" onClick={this.handleClick}/>
                     <div className="meetupDetailsName">{this.state.selectedMeetup.name}</div>
                     <div className="meetupInfo">
-                      <p className="group"><b>Organiser:</b> {this.state.selectedMeetup.group.name}</p>
+                      <p><b>Organiser:</b> {this.state.selectedMeetup.group.name}</p>
                       <p><b>Date:</b> <Moment format="dddd, MMM Do YYYY">{this.state.selectedMeetup.local_date}</Moment></p>
                       <p><b>Time:</b> {moment(this.state.selectedMeetup.local_time, "HH:mm").format('LT')}</p>
                       <p><b>Venue:</b> {this.state.selectedMeetup.venue.address_1}</p>
-                      <p><b>{this.state.selectedMeetup.yes_rsvp_count}</b> {this.state.selectedMeetup.group.who} attending</p>
+                      <p><b>{this.state.selectedMeetup.yes_rsvp_count}</b> <span className="members">{this.state.selectedMeetup.group.who}</span> attending</p>
                       <button className="meetupJoin" id={this.state.selectedMeetup.id} onClick={this.handleOpenModal}>Join</button>
                       </div>
                       <div className="meetupDetailsContent">
