@@ -6,7 +6,6 @@ import ReactModal from 'react-modal';
 import axios from 'axios';
 import Alert from 'react-s-alert';
 
-
 class MeetupDetails extends React.Component {
   constructor(props) {
      super(props);
@@ -20,10 +19,49 @@ class MeetupDetails extends React.Component {
      this.handleClick = this.handleClick.bind(this);
      this.handleOpenModal = this.handleOpenModal.bind(this);
      this.handleCloseModal = this.handleCloseModal.bind(this);
-   }
+  }
 
-   handleOpenModal () {
-      // if successful, change button to joined and make it green
+  handleJoinGroup (groupId, groupName) {
+    if (localStorage.getItem("token")) {
+      let token = localStorage.getItem("token");
+
+      axios({
+        method: 'post',
+        url: "https://api.meetup.com/2/profile/",
+        headers: {'Authorization': `Bearer ${token}`},
+        params: {
+          group_id: groupId,
+          group_urlname: groupName
+        }
+      }).then( (response) => {
+        if (this.state.selectedMeetup.group.name) {
+          Alert.success(`Success! You are now a member of the group, ${this.state.selectedMeetup.group.name}.`, {
+            position: 'top',
+            effect: 'flip',
+            beep: false,
+            html: true,
+            timeout: 'none'
+          });
+        }
+      })
+      .catch( (error) => {
+        Alert.warning(`Sorry, we couldn't add you to this group. They might have special requirements that you can read about <a href="https://www.meetup.com/${groupName}" target="_blank" rel="noopener">here</a>.`, {
+          position: 'top',
+          effect: 'flip',
+          beep: false,
+          html: true,
+          timeout: 'none'
+        });
+      });
+
+
+
+    } else {
+      this.setState({ showModal: true });
+    }
+  }
+
+  handleOpenModal () {
     if (localStorage.getItem("token")) {
       let token = localStorage.getItem("token");
       let id = window.location.href.match(/[^\/]+$/)[0];
@@ -48,9 +86,6 @@ class MeetupDetails extends React.Component {
         }
       })
       .catch( (error) => {
-        console.log(error);
-        // handle when need to become member of group first
-        // handle when
         Alert.warning("Sorry, we couldn't add you to this meetup. You might need to become a member of the group that's hosting it first.", {
           position: 'top',
           effect: 'flip',
@@ -60,11 +95,10 @@ class MeetupDetails extends React.Component {
         });
       });
 
-
-   } else {
-     this.setState({ showModal: true });
-     }
-   }
+    } else {
+      this.setState({ showModal: true });
+    }
+  }
 
   handleCloseModal () {
     this.setState({ showModal: false });
@@ -104,9 +138,9 @@ class MeetupDetails extends React.Component {
                 <img src="/close-menu.svg" className="close-modal" alt="close modal button" onClick={this.handleCloseModal}/>
                 <div className="modalContent">
                 <div className="modalHeading">Join {this.state.selectedMeetup.name}</div>
-                <p>Please sign in to join this meetup.</p>
+                <p>Please sign in to join.</p>
               <img src="/meetup.svg" className="meetup-logo" alt="meetup logo"/>
-                  <div className="alignment-wrapper"><a href={"https://secure.meetup.com/oauth2/authorize?client_id=f551auo99eqakj1e68270s47b3&response_type=token&scope=rsvp+ageless&redirect_uri=http://localhost:3000/oauth2/&state=" + this.state.selectedMeetup.id}><button className="signIn">Sign in with Meetup.com</button></a></div></div>
+                  <div className="alignment-wrapper"><a href={"https://secure.meetup.com/oauth2/authorize?client_id=f551auo99eqakj1e68270s47b3&response_type=token&scope=rsvp+ageless+group_join&redirect_uri=http://localhost:3000/oauth2/&state=" + this.state.selectedMeetup.id}><button className="signIn">Sign in with Meetup.com</button></a></div></div>
               </ReactModal>
               <div id="nav-wrapper">
                 <div id="navbar"><span tooltip="Menu" flow="down"><img src="/menu.svg" alt="menu" id="menu" onClick={this.handleClick} /></span></div>
@@ -116,12 +150,13 @@ class MeetupDetails extends React.Component {
                   <img src="/close-menu.svg" className="close-menu" alt="collapse sidebar button" onClick={this.handleClick}/>
                     <div className="meetupDetailsName">{this.state.selectedMeetup.name}</div>
                     <div className="meetupInfo">
-                      <p><b>Organiser:</b> {this.state.selectedMeetup.group.name}</p>
+                      <p><b>Group:</b> {this.state.selectedMeetup.group.name}</p>
                       <p><b>Date:</b> <Moment format="dddd, MMM Do YYYY">{this.state.selectedMeetup.local_date}</Moment></p>
                       <p><b>Time:</b> {moment(this.state.selectedMeetup.local_time, "HH:mm").format('LT')}</p>
                       <p><b>Venue:</b> {this.state.selectedMeetup.venue.address_1}</p>
                       <p><b>{this.state.selectedMeetup.yes_rsvp_count}</b> <span className="members">{this.state.selectedMeetup.group.who}</span> attending</p>
-                      <button className="meetupJoin" id={this.state.selectedMeetup.id} onClick={this.handleOpenModal}>Join</button>
+                      <button className="meetupJoin" id={this.state.selectedMeetup.id} onClick={this.handleOpenModal}>Join Meetup</button>
+                      <button className="groupJoin" onClick={() => this.handleJoinGroup(this.state.selectedMeetup.group.id, this.state.selectedMeetup.group.urlname)}>Join Group</button>
                       </div>
                       <div className="meetupDetailsContent">
                       <p id="meetupDescription" dangerouslySetInnerHTML={createMarkup()} />

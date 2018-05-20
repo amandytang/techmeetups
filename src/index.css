@@ -394,6 +394,24 @@ a {
   color: #fff;
 }
 
+.groupJoin {
+  margin: 20px auto 20px auto;
+  display: block;
+  width: 270px;
+  padding: 8px 0px 8px 0px;
+  border: 1px solid #575c58;
+  background-color: #ffffff;
+  box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
+  transition: all 150ms linear;
+  color: #121212;
+}
+
+.groupJoin:hover {
+  transition: all 250ms linear;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  color:#ccc;
+}
+
 .meetupJoin:hover {
   background: #3b433d;
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -608,10 +626,16 @@ a {
 .s-alert-warning {
   background-color: #e9547b !important;
 }
+
 .s-alert-box-inner {
   font-family: 'Roboto', sans-serif;
   font-size: 0.9em;
 }
+
+.s-alert-box-inner a {
+  text-decoration: underline !important;
+}
+
 .s-alert-show {
   z-index: 9999909 !important;
 }
