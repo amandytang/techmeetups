@@ -9,17 +9,53 @@ import Alert from 'react-s-alert';
 class MeetupDetails extends React.Component {
   constructor(props) {
      super(props);
-
      this.state = {
        isToggleOn: false,
        selectedMeetup: '',
-       showModal: false
+       showModal: false,
+       attending: ''
      };
-
      this.handleClick = this.handleClick.bind(this);
      this.handleOpenModal = this.handleOpenModal.bind(this);
      this.handleCloseModal = this.handleCloseModal.bind(this);
   }
+
+  componentDidMount () {
+    if (localStorage.getItem("token")) {
+      let token = localStorage.getItem("token");
+
+      axios({
+        method: 'get',
+        url: 'https://api.meetup.com/self/calendar/',
+        headers: {'Authorization': `Bearer ${token}`},
+        params: {
+          fields: "self"
+        }
+      }).then( (response) => {
+        let attending = [];
+          if (response.data) {
+            for (let i = 0; i < response.data.length; i++) {
+              if (response.data[i].self.rsvp) {
+                if (response.data[i].self.rsvp.response === "yes" || response.data[i].self.rsvp.response === "waitlist") {
+                  attending.push(response.data[i]);
+                }
+              }
+            }
+          }
+        this.setState({attending}); // array of objects
+        console.log(attending);
+        // if (this.state.selectedMeetup.id) {
+        //
+        // }
+
+      }).catch( (error) => {
+        console.log(error);
+      });
+  }
+
+  // based on the state (results from api call), find whether the current meetup id is present and if it is, do the class adding stuff
+
+}
 
   handleJoinGroup (groupId, groupName) {
     if (localStorage.getItem("token")) {
@@ -51,7 +87,9 @@ class MeetupDetails extends React.Component {
         }
 
         if (error.toString().includes('400')) {
-          Alert.warning(`Sorry, we couldn't add you to this group. They might have special requirements that you can read about <a href="https://www.meetup.com/${groupName}" target="_blank" rel="noopener">here</a>.`, {
+          this.setState({ showModal: true });
+
+          Alert.warning(`Sorry, we couldn't add you to this group. Have you signed in? They might also have special requirements that you can read about <a href="https://www.meetup.com/${groupName}" target="_blank" rel="noopener">here</a>.`, {
             position: 'top',
             effect: 'flip',
             beep: false,
@@ -96,7 +134,9 @@ class MeetupDetails extends React.Component {
         }
 
         if (error.toString().includes('400')) {
-          Alert.warning("Sorry, we couldn't add you to this meetup. You might need to become a member of the group that's hosting it first.", {
+          this.setState({ showModal: true });
+
+          Alert.warning("Sorry, we couldn't add you to this meetup. You might need to sign in and become a member of the group that's hosting it first.", {
             position: 'top',
             effect: 'flip',
             beep: false,
@@ -121,9 +161,7 @@ class MeetupDetails extends React.Component {
     }));
   }
 
-
   render () {
-    console.log();
     const createMarkup = () => {
       return {__html: `<b>Meetup Details</b>: ${this.state.selectedMeetup.description}`};
     }
