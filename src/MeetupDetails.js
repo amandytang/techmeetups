@@ -66,15 +66,12 @@ class MeetupDetails extends React.Component {
     }
 
     if (this.state.groups && this.state.selectedMeetup.id) {
-
-    if (this.state.groups.includes(this.state.selectedMeetup.group.id)) {
-
-      console.log('member');
-      if (!this.state.hasJoinedGroup) {
-        this.setState({hasJoinedGroup: true});
+      if (this.state.groups.includes(this.state.selectedMeetup.group.id)) {
+        if (!this.state.hasJoinedGroup) {
+          this.setState({hasJoinedGroup: true});
+        }
       }
     }
-}
 
      if (ids.includes(this.state.selectedMeetup.id)) {
        if (!this.state.hasJoinedMeetup) {
@@ -146,7 +143,7 @@ class MeetupDetails extends React.Component {
 
       axios({
         method: 'post',
-        url: 'http://tech-meetups-server.herokuapp.com/join_meetup',
+        url: 'http://localhost:3001/join_meetup',
         params: {
           rsvp: "yes",
           event_id: id,
@@ -168,7 +165,6 @@ class MeetupDetails extends React.Component {
         if (response.data.error) {
 
           if (response.data.error === "You must be a member of this group to RSVP to the event.") {
-
             Alert.warning("Sorry, we couldn't add you to this meetup. You need to become a member of the group that's hosting it first.", {
               position: 'top',
               effect: 'flip',
@@ -177,7 +173,6 @@ class MeetupDetails extends React.Component {
               timeout: 'none'
             });
           } else if (response.data.error === "You are not authorized to make that request.") {
-
             this.setState({ showModal: true });
 
             Alert.warning("Sorry, we couldn't add you to this meetup. Please sign in first.", {
@@ -187,10 +182,19 @@ class MeetupDetails extends React.Component {
               html: true,
               timeout: 'none'
             });
+          } else if (response.data.error === "There are not enough spots for your rsvp.") {
+
+            Alert.warning("Sorry, we couldn't add you to this meetup. Either there are not enough spots for your rsvp or rsvps haven't opened up yet.", {
+              position: 'top',
+              effect: 'flip',
+              beep: false,
+              html: true,
+              timeout: 'none'
+            });
           } else {
             this.setState({ showModal: true });
 
-            Alert.warning(`Sorry, something went wrong and we couldn't add you to this meetup. You might have more luck joining <a href="https://www.meetup.com/${this.state.selectedMeetup.group.urlname}/events/${this.state.selectedMeetup.id}/" target="_blank" rel="noopener>here</a>.`, {
+            Alert.warning(`Sorry, something went wrong and we couldn't add you to this meetup. You might have more luck joining <a href="https://www.meetup.com/${this.state.selectedMeetup.group.urlname}/events/${this.state.selectedMeetup.id}" target="_blank" rel="noopener">here</a>.`, {
               position: 'top',
               effect: 'flip',
               beep: false,
@@ -201,7 +205,6 @@ class MeetupDetails extends React.Component {
         }
       })
       .catch( (error) => {
-
         this.setState({ showModal: true });
 
         Alert.warning(`Sorry, something went wrong and we couldn't add you to this meetup. You might have more luck joining <a href="https://www.meetup.com/${this.state.selectedMeetup.group.urlname}/events/${this.state.selectedMeetup.id}/" target="_blank" rel="noopener>here</a>.`, {
