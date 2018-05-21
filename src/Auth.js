@@ -10,12 +10,14 @@ class Auth extends React.Component {
   }
 
   componentDidMount() {
-  // extract token from url, save into local storage and redirect back to meetup detail page
-    // let token = window.location.hash.match(/(?<=token=)(.*)(?=&token)/)[1];
-    let token = window.location.hash.split('/').pop();
+    // extract token from url, save into local storage and redirect back to meetup detail page
+    let chomp = window.location.hash.split('token=').pop();
+    let token = chomp.split('&token_type')[0];
+
+    // #access_token=
+    // 716bb087cfcc2ffc5e7fa527c5d5d860&token_type=bearer&expires_i
+
     localStorage.setItem("token", token);
-
-
 
     this.context.router.history.push(`/meetup/${window.location.hash.split(/state=/)[1]}`);
   };
