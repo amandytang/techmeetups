@@ -13,12 +13,14 @@ class MeetupDetails extends React.Component {
        isToggleOn: false,
        selectedMeetup: '',
        showModal: false,
-       attending: ''
+       attending: '',
+       hasJoined: false
      };
      this.handleClick = this.handleClick.bind(this);
      this.handleOpenModal = this.handleOpenModal.bind(this);
      this.handleCloseModal = this.handleCloseModal.bind(this);
   }
+
 
   componentDidMount () {
     if (localStorage.getItem("token")) {
@@ -32,7 +34,7 @@ class MeetupDetails extends React.Component {
           token: token
         }
       }).then( (response) => {
-         let attending = [];
+        let attending = [];
           if (response.data) { // array of objects
             for (let i = 0; i < response.data.length; i++) {
               if (response.data[i].self.rsvp) {
@@ -41,27 +43,28 @@ class MeetupDetails extends React.Component {
                 }
               }
             }
+            this.setState({attending});
           }
-        this.setState({attending}); // array of objects
 
-
-        // based on the state (results from api call), find whether the current meetup id is present and if it is, do the class adding stuff
-        let ids = [];
-        for (let i = 0; i < this.state.attending.length; i++) {
-          ids.push(this.state.attending[i].id)
-        }
-
-        if (ids.includes(this.state.selectedMeetup.id)) {
-          console.log('yes');
-        }
-
-      }).catch( (error) => {
-        console.log(error);
+        }).catch( (error) => {
+          console.log(error);
       });
+    }
   }
 
+  componentDidUpdate () {
+    let ids = [];
 
-}
+    for (let i = 0; i < this.state.attending.length; i++) {
+      ids.push(this.state.attending[i].id)
+    }
+
+     if (ids.includes(this.state.selectedMeetup.id)) {
+       if (!this.state.hasJoined) {
+         this.setState({hasJoined: true});
+       }
+    }
+  }
 
   handleJoinGroup (groupId, groupName) {
     if (localStorage.getItem("token")) {
@@ -245,19 +248,23 @@ class MeetupDetails extends React.Component {
                 :
                 (<div id="sidebar" className="sidebar-shadow" style={{"transform": "translate3d(0px, 0, 0)", "transition": "transform 0.4s ease"}}>
                   <img src="/close-menu.svg" className="close-menu" alt="collapse sidebar button" onClick={this.handleClick}/>
-                    <div className="meetupDetailsName">{this.state.selectedMeetup.name}</div>
-                    <div className="meetupInfo">
-                      <p><b>Group:</b> {this.state.selectedMeetup.group.name}</p>
-                      <p><b>Date:</b> <Moment format="dddd, MMM Do YYYY">{this.state.selectedMeetup.local_date}</Moment></p>
-                      <p><b>Time:</b> {moment(this.state.selectedMeetup.local_time, "HH:mm").format('LT')}</p>
-                      <p><b>Venue:</b> {this.state.selectedMeetup.venue.address_1}</p>
-                      <p><b>{this.state.selectedMeetup.yes_rsvp_count}</b> <span className="members">{this.state.selectedMeetup.group.who}</span> attending</p>
-                      <button className="meetupJoin" id={this.state.selectedMeetup.id} onClick={this.handleOpenModal}>Join Meetup</button>
-                      <button className="groupJoin" onClick={() => this.handleJoinGroup(this.state.selectedMeetup.group.id, this.state.selectedMeetup.group.urlname)}>Join Group</button>
-                      </div>
-                      <div className="meetupDetailsContent">
-                      <p id="meetupDescription" dangerouslySetInnerHTML={createMarkup()} />
-                    </div>
+                  <div className="meetupDetailsName">{this.state.selectedMeetup.name}</div>
+                  <div className="meetupInfo">
+                    <p><b>Group:</b> {this.state.selectedMeetup.group.name}</p>
+                    <p><b>Date:</b> <Moment format="dddd, MMM Do YYYY">{this.state.selectedMeetup.local_date}</Moment></p>
+                    <p><b>Time:</b> {moment(this.state.selectedMeetup.local_time, "HH:mm").format('LT')}</p>
+                    <p><b>Venue:</b> {this.state.selectedMeetup.venue.address_1}</p>
+                    <p><b>{this.state.selectedMeetup.yes_rsvp_count}</b> <span className="members">{this.state.selectedMeetup.group.who}</span> attending</p>
+                    {this.state.hasJoined
+                      ? <button className="meetupJoined" id={this.state.selectedMeetup.id} onClick={this.handleOpenModal}>Meetup Joined</button>
+                      : <button className="meetupJoin" id={this.state.selectedMeetup.id} onClick={this.handleOpenModal}>Join Meetup</button>}
+                    {this.state.hasJoined
+                      ? <button className="groupJoined" onClick={() => this.handleJoinGroup(this.state.selectedMeetup.group.id, this.state.selectedMeetup.group.urlname)}>Group Joined</button>
+                      : <button className="groupJoin" onClick={() => this.handleJoinGroup(this.state.selectedMeetup.group.id, this.state.selectedMeetup.group.urlname)}>Join Group</button>}
+                  </div>
+                  <div className="meetupDetailsContent">
+                    <p id="meetupDescription" dangerouslySetInnerHTML={createMarkup()} />
+                  </div>
                 </div>)}
               </div>
             </div>
@@ -265,7 +272,7 @@ class MeetupDetails extends React.Component {
         }
       }
     }
-    </MeetupContext.Consumer>
+  </MeetupContext.Consumer>
   }
 }
 
