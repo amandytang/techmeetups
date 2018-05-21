@@ -143,7 +143,7 @@ class MeetupDetails extends React.Component {
 
       axios({
         method: 'post',
-        url: 'http://localhost:3001/join_meetup',
+        url: 'http://tech-meetups-server.herokuapp.com/join_meetup',
         params: {
           rsvp: "yes",
           event_id: id,
