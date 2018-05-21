@@ -53,16 +53,18 @@ class App extends React.Component {
               } else {
                 currentComponent.setState({meetups: data.data.events });
                 if(currentComponent.state.meetups) {
-                let meetupData = currentComponent.state.meetups.slice(0,30);
+                let meetupData = currentComponent.state.meetups.slice(0,60);
                 let tempArr = [];
                 for (let i = 0; i < meetupData.length; i++) {
                   if (meetupData[i].venue && meetupData[i].name) {
                     let isLongString = false;
-                    if (meetupData[i].description.length > 255) {
-                      isLongString = true;
-                    }
-                    else {
-                      isLongString = false;
+                    if (meetupData[i].description) {
+                      if (meetupData[i].description.length > 255) {
+                        isLongString = true;
+                      }
+                      else {
+                        isLongString = false;
+                      }
                     }
                     let geojson = {
                       "meetup": meetupData[i].name,
@@ -104,29 +106,41 @@ class App extends React.Component {
 
          function fetchMeetups () {
          let jsonp = require('jsonp');
-         jsonp(`https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public&lon=${userLng}&text=tech&radius=25&lat=${userLat}&key=543b1a4f397a53372c62665f145eb`, null, (err, data) => {
+         jsonp(`https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public&lon=${userLng}&text=tech&page=100&lat=${userLat}&key=543b1a4f397a53372c62665f145eb`, null, (err, data) => {
           if (err) {
             console.error(err.message);
           } else {
             currentComponent.setState({meetups: data.data.events });
             if (currentComponent.state.meetups) {
-              let meetupData = currentComponent.state.meetups.slice(0,30);
+              let meetupData = currentComponent.state.meetups.slice(0,70);
               let tempArr = [];
               for (let i = 0; i < meetupData.length; i++) {
                 if (meetupData[i].venue && meetupData[i].name) {
                   let isLongString = false;
-                  if (meetupData[i].description.length > 255) {
-                    isLongString = true;
-                  } else {
-                    isLongString = false;
+                  if (meetupData[i].description) {
+                    if (meetupData[i].description.length > 255) {
+                      isLongString = true;
+                    } else {
+                      isLongString = false;
+                    }
                   }
-
-                  let geojson = {
-                    "meetup": meetupData[i].name,
-                    "id": meetupData[i].id,
-                    "latitude": meetupData[i].venue.lat,
-                    "longitude": meetupData[i].venue.lon,
-                    "description": isLongString ? `${meetupData[i].description.slice(0,255)}...` : `${meetupData[i].description.slice(0,200)}`
+                  let geojson;
+                  if (meetupData[i].description) {
+                     geojson = {
+                      "meetup": meetupData[i].name,
+                      "id": meetupData[i].id,
+                      "latitude": meetupData[i].venue.lat,
+                      "longitude": meetupData[i].venue.lon,
+                      "description": isLongString ? `${meetupData[i].description.slice(0,255)}...` : `${meetupData[i].description.slice(0,200)}`
+                    }
+                  } else {
+                     geojson = {
+                      "meetup": meetupData[i].name,
+                      "id": meetupData[i].id,
+                      "latitude": meetupData[i].venue.lat,
+                      "longitude": meetupData[i].venue.lon,
+                      "description": "Coming soon."
+                    }
                   }
                 tempArr.push(geojson);
                 }

@@ -24,17 +24,7 @@ class Navigation extends React.Component {
         this.handleClick();
      }
     }
-// componentDidMount() {
-// could we say... if (this.state.meetup)
-//       const toggleHeader = () => {
-//       if (this.props.isToggleOn === false) {
-//         this.setState(prevState => ({
-//           isToggleOn: !prevState.isToggleOn
-//         }));
-//     }
-//   }
-//   toggleHeader();
-// }
+
   render () {
 
     return (
@@ -74,8 +64,9 @@ class MeetupList extends React.Component {
         {({ meetups, geojson, lat, lng }) => {
 
           let _= require('underscore');
-          let meetupData = _.sortBy(meetups.slice(0,30), 'local_date');
+          let meetupData = _.sortBy(meetups, 'local_date');
           // reverse geocoding
+
           Geocode.fromLatLng(lat, lng).then(
             response => {
               const suburb = response.results[0].address_components[2].long_name;

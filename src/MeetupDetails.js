@@ -35,7 +35,7 @@ class MeetupDetails extends React.Component {
          let attending = [];
           if (response.data) { // array of objects
             for (let i = 0; i < response.data.length; i++) {
-              if (response.data[i].self) {
+              if (response.data[i].self.rsvp) {
                 if (response.data[i].self.rsvp.response === "yes" || response.data[i].self.rsvp.response === "waitlist") {
                   attending.push(response.data[i]);
                 }
@@ -43,11 +43,16 @@ class MeetupDetails extends React.Component {
             }
           }
         this.setState({attending}); // array of objects
-        console.log(attending);
 
 
-        if (this.state.selectedMeetup.id) {
+        // based on the state (results from api call), find whether the current meetup id is present and if it is, do the class adding stuff
+        let ids = [];
+        for (let i = 0; i < this.state.attending.length; i++) {
+          ids.push(this.state.attending[i].id)
+        }
 
+        if (ids.includes(this.state.selectedMeetup.id)) {
+          console.log('yes');
         }
 
       }).catch( (error) => {
@@ -55,7 +60,6 @@ class MeetupDetails extends React.Component {
       });
   }
 
-  // based on the state (results from api call), find whether the current meetup id is present and if it is, do the class adding stuff
 
 }
 
