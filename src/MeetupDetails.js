@@ -27,7 +27,7 @@ class MeetupDetails extends React.Component {
       axios({
         method: 'get',
         url: 'https://api.meetup.com/self/calendar/',
-        headers: {'Authorization': `Bearer ${token}`},
+        headers: {'Authorization': `Bearer ${token}`, 'Content-Type': 'application/x-www-form-urlencoded'},
         params: {
           fields: "self"
         }
