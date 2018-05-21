@@ -26,16 +26,16 @@ class MeetupDetails extends React.Component {
 
       axios({
         method: 'get',
-        url: 'https://api.meetup.com/self/calendar/',
-        headers: {'Authorization': `Bearer ${token}`, 'Content-Type': 'application/x-www-form-urlencoded'},
+        url: 'http://tech-meetups-server.herokuapp.com/attending',
         params: {
-          fields: "self"
+          fields: "self",
+          token: token
         }
       }).then( (response) => {
-        let attending = [];
-          if (response.data) {
+         let attending = [];
+          if (response.data) { // array of objects
             for (let i = 0; i < response.data.length; i++) {
-              if (response.data[i].self.rsvp) {
+              if (response.data[i].self) {
                 if (response.data[i].self.rsvp.response === "yes" || response.data[i].self.rsvp.response === "waitlist") {
                   attending.push(response.data[i]);
                 }
@@ -44,9 +44,11 @@ class MeetupDetails extends React.Component {
           }
         this.setState({attending}); // array of objects
         console.log(attending);
-        // if (this.state.selectedMeetup.id) {
-        //
-        // }
+
+
+        if (this.state.selectedMeetup.id) {
+
+        }
 
       }).catch( (error) => {
         console.log(error);
@@ -63,15 +65,28 @@ class MeetupDetails extends React.Component {
 
       axios({
         method: 'post',
-        url: "https://api.meetup.com/2/profile/",
-        headers: {'Authorization': `Bearer ${token}`},
+        url: 'http://tech-meetups-server.herokuapp.com/join_group',
         params: {
           group_id: groupId,
-          group_urlname: groupName
+          group_urlname: groupName,
+          token: token
         }
       }).then( (response) => {
-        if (this.state.selectedMeetup.group.name) {
-          Alert.success(`Success! You are now a member of the group, ${this.state.selectedMeetup.group.name}. Don’t forget to join the meetup if that’s what you’re into.`, {
+        if (!response.data.error) {
+          if (this.state.selectedMeetup.group.name) {
+            Alert.success(`Success! You are now a member of the group, ${this.state.selectedMeetup.group.name}. Don’t forget to join the meetup if that’s what you’re into.`, {
+              position: 'top',
+              effect: 'flip',
+              beep: false,
+              html: true,
+              timeout: 'none'
+            });
+          }
+        }
+        if (response.data.error) {
+          this.setState({ showModal: true });
+
+          Alert.warning(`Sorry, we couldn't add you to this group. Have you signed in? The group might also have special joining requirements that you can read about <a href="https://www.meetup.com/${groupName}" target="_blank" rel="noopener">here</a>.`, {
             position: 'top',
             effect: 'flip',
             beep: false,
@@ -81,22 +96,17 @@ class MeetupDetails extends React.Component {
         }
       })
       .catch( (error) => {
-      // if API returns 401 error, access token has likely expired - so trigger reauthorisation modal
-        if (error.toString().includes('401')) {
-          this.setState({ showModal: true });
-        }
 
-        if (error.toString().includes('400')) {
-          this.setState({ showModal: true });
+        this.setState({ showModal: true });
 
-          Alert.warning(`Sorry, we couldn't add you to this group. Have you signed in? They might also have special requirements that you can read about <a href="https://www.meetup.com/${groupName}" target="_blank" rel="noopener">here</a>.`, {
-            position: 'top',
-            effect: 'flip',
-            beep: false,
-            html: true,
-            timeout: 'none'
-          });
-        }
+        Alert.warning(`Sorry, we couldn't add you to this group. Have you signed in? The group might also have special joining requirements that you can read about <a href="https://www.meetup.com/${groupName}" target="_blank" rel="noopener">here</a>.`, {
+          position: 'top',
+          effect: 'flip',
+          beep: false,
+          html: true,
+          timeout: 'none'
+        });
+
       });
 
     } else {
@@ -107,43 +117,77 @@ class MeetupDetails extends React.Component {
   handleOpenModal () {
     if (localStorage.getItem("token")) {
       let token = localStorage.getItem("token");
-      let id = window.location.href.match(/[^\/]+$/)[0];
+      // let id = window.location.href.match(/[^\/]+$/)[0]; // this crashes in safari
+      let id = window.location.href.split('/').pop();
 
       axios({
         method: 'post',
-        url: 'https://api.meetup.com/2/rsvp/',
-        headers: {'Authorization': `Bearer ${token}`},
+        url: 'http://tech-meetups-server.herokuapp.com/join_meetup',
         params: {
           rsvp: "yes",
-          event_id: id
+          event_id: id,
+          token: token
         }
       }).then( (response) => {
-        if (this.state.selectedMeetup.name) {
-          Alert.success(`Success! You're going to ${this.state.selectedMeetup.name}.`, {
-            position: 'top',
-            effect: 'flip',
-            beep: false,
-            html: true,
-            timeout: 'none'
-          });
+        if (!response.data.error) {
+          if (this.state.selectedMeetup.name) {
+            Alert.success(`Success! You're going to ${this.state.selectedMeetup.name}.`, {
+              position: 'top',
+              effect: 'flip',
+              beep: false,
+              html: true,
+              timeout: 'none'
+            });
+          }
+        }
+
+        if (response.data.error) {
+
+          if (response.data.error === "You must be a member of this group to RSVP to the event.") {
+
+            Alert.warning("Sorry, we couldn't add you to this meetup. You need to become a member of the group that's hosting it first.", {
+              position: 'top',
+              effect: 'flip',
+              beep: false,
+              html: true,
+              timeout: 'none'
+            });
+          } else if (response.data.error === "You are not authorized to make that request.") {
+
+            this.setState({ showModal: true });
+
+            Alert.warning("Sorry, we couldn't add you to this meetup. Please sign in first.", {
+              position: 'top',
+              effect: 'flip',
+              beep: false,
+              html: true,
+              timeout: 'none'
+            });
+          } else {
+            this.setState({ showModal: true });
+
+            Alert.warning(`Sorry, something went wrong and we couldn't add you to this meetup. You might have more luck joining <a href="https://www.meetup.com/${this.state.selectedMeetup.group.urlname}/events/${this.state.selectedMeetup.id}/" target="_blank" rel="noopener>here</a>.`, {
+              position: 'top',
+              effect: 'flip',
+              beep: false,
+              html: true,
+              timeout: 'none'
+            });
+          }
         }
       })
       .catch( (error) => {
-        if (error.toString().includes('401')) {
-          this.setState({ showModal: true });
-        }
 
-        if (error.toString().includes('400')) {
-          this.setState({ showModal: true });
+        this.setState({ showModal: true });
 
-          Alert.warning("Sorry, we couldn't add you to this meetup. You might need to sign in and become a member of the group that's hosting it first.", {
-            position: 'top',
-            effect: 'flip',
-            beep: false,
-            html: true,
-            timeout: 'none'
-          });
-        }
+        Alert.warning(`Sorry, something went wrong and we couldn't add you to this meetup. You might have more luck joining <a href="https://www.meetup.com/${this.state.selectedMeetup.group.urlname}/events/${this.state.selectedMeetup.id}/" target="_blank" rel="noopener>here</a>.`, {
+          position: 'top',
+          effect: 'flip',
+          beep: false,
+          html: true,
+          timeout: 'none'
+        });
+
       });
 
     } else {

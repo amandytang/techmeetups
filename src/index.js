@@ -15,14 +15,12 @@ const Routes = (
       <div>
         <Route exact path="/" render={props =>
           <div>
-          <Navigation />
-
+            <Navigation />
           </div>
         } />
         <Route path="/meetup/:id" render={props =>
           <div>
           <Navigation />
-
             <MeetupDetails />
           </div>
         } />
