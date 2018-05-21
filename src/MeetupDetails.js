@@ -189,7 +189,7 @@ class MeetupDetails extends React.Component {
                 <div className="modalHeading">Join {this.state.selectedMeetup.name}</div>
                 <p>Please sign in to join.</p>
               <img src="/meetup.svg" className="meetup-logo" alt="meetup logo"/>
-                  <div className="alignment-wrapper"><a href={"https://secure.meetup.com/oauth2/authorize?client_id=f551auo99eqakj1e68270s47b3&response_type=token&scope=rsvp+ageless+group_join&redirect_uri=http://localhost:3000/oauth2/&state=" + this.state.selectedMeetup.id}><button className="signIn">Sign in with Meetup.com</button></a></div></div>
+                  <div className="alignment-wrapper"><a href={"https://secure.meetup.com/oauth2/authorize?client_id=nshm9bem6d20rlgg1it0hhg1gk&response_type=token&scope=rsvp+ageless+group_join&redirect_uri=http://tech-meetups.herokuapp.com/oauth2/&state=" + this.state.selectedMeetup.id}><button className="signIn">Sign in with Meetup.com</button></a></div></div>
               </ReactModal>
               <div id="nav-wrapper">
                 <div id="navbar"><span tooltip="Menu" flow="down"><img src="/menu.svg" alt="menu" id="menu" onClick={this.handleClick} /></span></div>
