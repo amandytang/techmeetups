@@ -53,7 +53,7 @@ class App extends React.Component {
               } else {
                 currentComponent.setState({meetups: data.data.events });
                 if(currentComponent.state.meetups) {
-                let meetupData = currentComponent.state.meetups.slice(0,60);
+                let meetupData = currentComponent.state.meetups.slice(0,70);
                 let tempArr = [];
                 for (let i = 0; i < meetupData.length; i++) {
                   if (meetupData[i].venue && meetupData[i].name) {
@@ -112,7 +112,7 @@ class App extends React.Component {
           } else {
             currentComponent.setState({meetups: data.data.events });
             if (currentComponent.state.meetups) {
-              let meetupData = currentComponent.state.meetups.slice(0,70);
+              let meetupData = currentComponent.state.meetups.slice(0,80);
               let tempArr = [];
               for (let i = 0; i < meetupData.length; i++) {
                 if (meetupData[i].venue && meetupData[i].name) {

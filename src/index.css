@@ -395,6 +395,8 @@ a {
 }
 
 .meetupJoined {
+  text-align:center !important;
+  font-size: 0.85em;
   margin: 20px auto 20px auto;
   display: block;
   width: 270px;
@@ -417,6 +419,8 @@ a {
   color: #121212;
 }
 .groupJoined {
+  text-align:center !important;
+  font-size: 0.85em;
   margin: 20px auto 20px auto;
   display: block;
   width: 270px;

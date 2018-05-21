@@ -14,7 +14,9 @@ class MeetupDetails extends React.Component {
        selectedMeetup: '',
        showModal: false,
        attending: '',
-       hasJoined: false
+       hasJoinedMeetup: false,
+       hasJoinedGroup: false,
+       groups: ''
      };
      this.handleClick = this.handleClick.bind(this);
      this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -35,8 +37,10 @@ class MeetupDetails extends React.Component {
         }
       }).then( (response) => {
         let attending = [];
-          if (response.data) { // array of objects
+        let groups = [];
+          if (response.data) {
             for (let i = 0; i < response.data.length; i++) {
+              groups.push(response.data[i].group.id);
               if (response.data[i].self.rsvp) {
                 if (response.data[i].self.rsvp.response === "yes" || response.data[i].self.rsvp.response === "waitlist") {
                   attending.push(response.data[i]);
@@ -44,11 +48,13 @@ class MeetupDetails extends React.Component {
               }
             }
             this.setState({attending});
+            this.setState({groups});
           }
 
         }).catch( (error) => {
           console.log(error);
       });
+
     }
   }
 
@@ -59,9 +65,20 @@ class MeetupDetails extends React.Component {
       ids.push(this.state.attending[i].id)
     }
 
+    if (this.state.groups && this.state.selectedMeetup.id) {
+
+    if (this.state.groups.includes(this.state.selectedMeetup.group.id)) {
+
+      console.log('member');
+      if (!this.state.hasJoinedGroup) {
+        this.setState({hasJoinedGroup: true});
+      }
+    }
+}
+
      if (ids.includes(this.state.selectedMeetup.id)) {
-       if (!this.state.hasJoined) {
-         this.setState({hasJoined: true});
+       if (!this.state.hasJoinedMeetup) {
+         this.setState({hasJoinedMeetup: true});
        }
     }
   }
@@ -255,11 +272,11 @@ class MeetupDetails extends React.Component {
                     <p><b>Time:</b> {moment(this.state.selectedMeetup.local_time, "HH:mm").format('LT')}</p>
                     <p><b>Venue:</b> {this.state.selectedMeetup.venue.address_1}</p>
                     <p><b>{this.state.selectedMeetup.yes_rsvp_count}</b> <span className="members">{this.state.selectedMeetup.group.who}</span> attending</p>
-                    {this.state.hasJoined
-                      ? <button className="meetupJoined" id={this.state.selectedMeetup.id} onClick={this.handleOpenModal}>Meetup Joined</button>
+                    {this.state.hasJoinedMeetup
+                      ? <div className="meetupJoined" id={this.state.selectedMeetup.id}>Meetup Joined</div>
                       : <button className="meetupJoin" id={this.state.selectedMeetup.id} onClick={this.handleOpenModal}>Join Meetup</button>}
-                    {this.state.hasJoined
-                      ? <button className="groupJoined" onClick={() => this.handleJoinGroup(this.state.selectedMeetup.group.id, this.state.selectedMeetup.group.urlname)}>Group Joined</button>
+                    {this.state.hasJoinedGroup
+                      ? <div className="groupJoined">Group Joined</div>
                       : <button className="groupJoin" onClick={() => this.handleJoinGroup(this.state.selectedMeetup.group.id, this.state.selectedMeetup.group.urlname)}>Join Group</button>}
                   </div>
                   <div className="meetupDetailsContent">
