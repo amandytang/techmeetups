@@ -5,12 +5,13 @@ import moment from 'moment';
 import ReactModal from 'react-modal';
 import axios from 'axios';
 import Alert from 'react-s-alert';
+import { Link } from 'react-router-dom';
 
 class MeetupDetails extends React.Component {
   constructor(props) {
      super(props);
      this.state = {
-       isToggleOn: false,
+       isSidebarClosed: false,
        selectedMeetup: '',
        showModal: false,
        attending: '',
@@ -138,7 +139,6 @@ class MeetupDetails extends React.Component {
   handleOpenModal () {
     if (localStorage.getItem("token")) {
       let token = localStorage.getItem("token");
-      // let id = window.location.href.match(/[^\/]+$/)[0]; // this crashes in safari
       let id = window.location.href.split('/').pop();
 
       axios({
@@ -228,7 +228,7 @@ class MeetupDetails extends React.Component {
 
   handleClick() {
     this.setState(prevState => ({
-      isToggleOn: !prevState.isToggleOn
+      isSidebarClosed: !prevState.isSidebarClosed
     }));
   }
 
@@ -264,12 +264,18 @@ class MeetupDetails extends React.Component {
               </ReactModal>
               <div id="nav-wrapper">
                 <div id="navbar"><span tooltip="Menu" flow="down"><img src="/menu.svg" alt="menu" id="menu" onClick={this.handleClick} /></span></div>
-                {this.state.isToggleOn ? (<div id="sidebar" style={{"transition": "transform 0.4s ease"}}></div>)
+                {this.state.isSidebarClosed ? (<div id="sidebar" style={{"transition": "transform 0.4s ease"}}></div>)
                 :
                 (<div id="sidebar" className="sidebar-shadow" style={{"transform": "translate3d(0px, 0, 0)", "transition": "transform 0.4s ease"}}>
                   <img src="/close-menu.svg" className="close-menu" alt="collapse sidebar button" onClick={this.handleClick}/>
                   <div className="meetupDetailsName">{this.state.selectedMeetup.name}</div>
+
                   <div className="meetupInfo">
+                    <div className="back">
+                      <Link to={ {
+                      pathname: '/back'
+                      } } >Back</Link>
+                    </div>
                     <p><b>Group:</b> {this.state.selectedMeetup.group.name}</p>
                     <p><b>Date:</b> <Moment format="dddd, MMM Do YYYY">{this.state.selectedMeetup.local_date}</Moment></p>
                     <p><b>Time:</b> {moment(this.state.selectedMeetup.local_time, "HH:mm").format('LT')}</p>

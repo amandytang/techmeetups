@@ -8,22 +8,33 @@ import Geocode from "react-geocode";
 class Navigation extends React.Component {
   constructor(props) {
      super(props);
-     this.state = {isToggleOn: true};
+     this.state = {
+       isSidebarClosed: true,
+     };
 
      this.handleClick = this.handleClick.bind(this);
    }
 
+  componentDidMount () {
+
+    if (this.props.openSidebar) {
+      if (this.state.isSidebarClosed) {
+       this.setState({isSidebarClosed: false})
+     }
+    }
+  }
+
   handleClick() {
       this.setState(prevState => ({
-        isToggleOn: !prevState.isToggleOn
+        isSidebarClosed: !prevState.isSidebarClosed
       }));
     }
 
-    handleKeyPress = (event) => {
-      if(event.key == 'Enter'){
-        this.handleClick();
-     }
-    }
+  handleKeyPress = (event) => {
+    if(event.key == 'Enter'){
+      this.handleClick();
+   }
+  }
 
   render () {
 
@@ -33,7 +44,7 @@ class Navigation extends React.Component {
         {({ meetups, geojson }) => {
           return (
             <div id="nav-wrapper">
-              <div id="navbar"><span className="menu" tooltip="Menu" flow="down" tabIndex="0"             onKeyPress={this.handleKeyPress}><img src="/menu.svg" alt="menu" id="menu" onClick={this.handleClick}/></span></div>{this.state.isToggleOn ? (<div id="sidebar" style={{"transition": "transform 0.4s ease"}}></div>)
+              <div id="navbar"><span className="menu" tooltip="Menu" flow="down" tabIndex="0" onKeyPress={this.handleKeyPress}><img src="/menu.svg" alt="menu" id="menu" onClick={this.handleClick}/></span></div>{this.state.isSidebarClosed ? (<div id="sidebar" style={{"transition": "transform 0.4s ease"}}></div>)
               :
               (<div id="sidebar" className="sidebar-shadow" style={{"transform": "translate3d(0px, 0, 0)", "transition": "transform 0.4s ease"}}>
                 <img src="/close-menu.svg" className="close-menu" alt="collapse sidebar button" onClick={this.handleClick}/>
