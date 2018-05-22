@@ -782,9 +782,6 @@ a {
     right: 0 !important;
     width: 320px;
   }
-}
-
-@media only screen and (max-width: 410px) {
   .infoModalContent p {
     font-size: 0.9em;
     padding-top: 5px;
