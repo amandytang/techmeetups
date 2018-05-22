@@ -84,7 +84,7 @@ class MeetupDetails extends React.Component {
 
       axios({
         method: 'post',
-        url: 'http://tech-meetups-server.herokuapp.com/join_group',
+        url: 'http://localhost:3001/join_group',
         params: {
           group_id: groupId,
           group_urlname: groupName,
