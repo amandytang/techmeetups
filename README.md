@@ -31,6 +31,7 @@ The frontend is a Single-Page App built in React.
 
 The following libraries/API's/frameworks were used:
 * React
+* React Context API
 * OAuth2
 * Mapbox 🗺
 * d3 (map animations)
