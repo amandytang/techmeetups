@@ -255,7 +255,7 @@ class MeetupDetails extends React.Component {
                  contentLabel="Modal"
                  ariaHideApp={false}
               >
-                <img src="/close-menu.svg" className="close-modal" alt="close modal button" onClick={this.handleCloseModal}/>
+                <button className="close-modal" alt="close modal button" onClick={this.handleCloseModal}/>
                 <div className="modalContent">
                 <div className="modalHeading">Join {this.state.selectedMeetup.name.slice(0,60)}</div>
                 <p>Please sign in to join.</p>
@@ -267,7 +267,7 @@ class MeetupDetails extends React.Component {
                 {this.state.isSidebarClosed ? (<div id="sidebar" style={{"transition": "transform 0.4s ease"}}></div>)
                 :
                 (<div id="sidebar" className="sidebar-shadow" style={{"transform": "translate3d(0px, 0, 0)", "transition": "transform 0.4s ease"}}>
-                  <img src="/close-menu.svg" className="close-menu" alt="collapse sidebar button" onClick={this.handleClick}/>
+                  <button className="close-menu" alt="collapse sidebar button" onClick={this.handleClick}/>
                   <div className="meetupDetailsName">{this.state.selectedMeetup.name}</div>
 
                   <div className="meetupInfo">

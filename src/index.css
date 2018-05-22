@@ -85,10 +85,17 @@ body, html {
 
 .close-menu {
   display:inline-block;
-  position: absolute;
-  right:0;
-  padding: 5px;
+  float: right;
+  margin-top: 5px;
+  margin-right: 5px;
   transition: 300ms ease-out;
+  background-image: url("/close-menu.svg");
+  width: 25px;
+  height: 25px;
+  background-color: rgba(0,0,0,0);
+  border: none;
+  transition: 300ms ease-out;
+
 }
 
 .close-menu:hover {
@@ -222,8 +229,14 @@ body, html {
 .close-modal {
   display:inline-block;
   float: right;
-  padding: 5px;
+  margin-top: 5px;
+  margin-right: 5px;
   transition: 300ms ease-out;
+  background-image: url("/close-menu.svg");
+  width: 25px;
+  height: 25px;
+  background-color: rgba(0,0,0,0);
+  border: none;
 }
 .close-modal:hover {
   cursor: pointer;
