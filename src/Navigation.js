@@ -11,12 +11,10 @@ class Navigation extends React.Component {
      this.state = {
        isSidebarClosed: true,
      };
-
      this.handleClick = this.handleClick.bind(this);
    }
 
   componentDidMount () {
-
     if (this.props.openSidebar) {
       if (this.state.isSidebarClosed) {
        this.setState({isSidebarClosed: false})
@@ -25,15 +23,15 @@ class Navigation extends React.Component {
   }
 
   handleClick() {
-      this.setState(prevState => ({
-        isSidebarClosed: !prevState.isSidebarClosed
-      }));
-    }
+    this.setState(prevState => ({
+      isSidebarClosed: !prevState.isSidebarClosed
+    }));
+  }
 
   handleKeyPress = (event) => {
-    if(event.key == 'Enter'){
+    if (event.key == 'Enter') {
       this.handleClick();
-   }
+    }
   }
 
   render () {
@@ -94,7 +92,6 @@ class MeetupList extends React.Component {
           <div>
             <div id="meetups">
               <div id="meetups-header"><p>&nbsp;Tech&nbsp;<span className="accent">Meetups&nbsp;</span></p>
-                {/*<p id="tagline">near <span id="area">you</span></p>*/}
               <p id="tagline">near <span id="area">{this.state.suburb}</span></p>
 
               </div>
