@@ -77,19 +77,18 @@ class MeetupList extends React.Component {
           let _= require('underscore');
           let meetupData = _.sortBy(meetups, 'local_date');
 
-          Geocode.setApiKey("AIzaSyCsKztr2SzD8TrNkG-W4ruL2cLBcxf7SEU");
-
-          Geocode.fromLatLng(lat, lng).then(
-            response => {
-              const suburb = response.results[0].address_components[2].long_name;
-              if (this.state.suburb !== suburb) {
-                this.setState({suburb});
-              }
-            },
-            error => {
-              // console.error(error);
-            }
-          );
+          // Geocode.setApiKey("AIzaSyCsKztr2SzD8TrNkG-W4ruL2cLBcxf7SEU");
+          //
+          // Geocode.fromLatLng(lat, lng).then(
+          //   response => {
+          //     const suburb = response.results[0].address_components[2].long_name;
+          //     if (this.state.suburb !== suburb) {
+          //       this.setState({suburb});
+          //     }
+          //   },
+          //   error => {
+          //   }
+          // );
           return (
 
           <div>

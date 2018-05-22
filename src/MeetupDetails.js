@@ -257,7 +257,7 @@ class MeetupDetails extends React.Component {
               >
                 <img src="/close-menu.svg" className="close-modal" alt="close modal button" onClick={this.handleCloseModal}/>
                 <div className="modalContent">
-                <div className="modalHeading">Join {this.state.selectedMeetup.name}</div>
+                <div className="modalHeading">Join {this.state.selectedMeetup.name.slice(0,60)}</div>
                 <p>Please sign in to join.</p>
               <img src="/meetup.svg" className="meetup-logo" alt="meetup logo"/>
                   <div className="alignment-wrapper"><a href={"https://secure.meetup.com/oauth2/authorize?client_id=nshm9bem6d20rlgg1it0hhg1gk&response_type=token&scope=rsvp+ageless+group_join&redirect_uri=http://tech-meetups.herokuapp.com/oauth2/&state=" + this.state.selectedMeetup.id}><button className="signIn">Sign in with Meetup.com</button></a></div></div>
