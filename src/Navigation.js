@@ -76,28 +76,28 @@ class MeetupList extends React.Component {
 
           let _= require('underscore');
           let meetupData = _.sortBy(meetups, 'local_date');
-          // reverse geocoding
-          // api query limit reached
-          // Geocode.fromLatLng(lat, lng).then(
-          //   response => {
-          //     const suburb = response.results[0].address_components[2].long_name;
-          //     if (this.state.suburb !== suburb) {
-          //       this.setState({suburb});
-          //     }
-          //   },
-          //   error => {
-          //     console.error(error);
-          //   }
-          // );
+
+          Geocode.setApiKey("AIzaSyCsKztr2SzD8TrNkG-W4ruL2cLBcxf7SEU");
+
+          Geocode.fromLatLng(lat, lng).then(
+            response => {
+              const suburb = response.results[0].address_components[2].long_name;
+              if (this.state.suburb !== suburb) {
+                this.setState({suburb});
+              }
+            },
+            error => {
+              // console.error(error);
+            }
+          );
           return (
 
           <div>
             <div id="meetups">
               <div id="meetups-header"><p>&nbsp;Tech&nbsp;<span className="accent">Meetups&nbsp;</span></p>
-              <p id="tagline">near <span id="area">you</span></p>
-              {/* Uncomment when api resets
+                {/*<p id="tagline">near <span id="area">you</span></p>*/}
               <p id="tagline">near <span id="area">{this.state.suburb}</span></p>
-              */}
+
               </div>
               {meetupData.map( (meetup) => {
                 if (meetup.venue && meetup.local_date) {
