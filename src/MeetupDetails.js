@@ -70,6 +70,7 @@ class MeetupDetails extends React.Component {
       if (this.state.groups.includes(this.state.selectedMeetup.group.id)) {
         if (!this.state.hasJoinedGroup) {
           this.setState({hasJoinedGroup: true});
+          this.forceUpdate();
         }
       }
     }
@@ -77,6 +78,7 @@ class MeetupDetails extends React.Component {
      if (ids.includes(this.state.selectedMeetup.id)) {
        if (!this.state.hasJoinedMeetup) {
          this.setState({hasJoinedMeetup: true});
+         this.forceUpdate();
        }
     }
   }
