@@ -163,7 +163,7 @@ class App extends React.Component {
         <form>
           <input
             className="searchInput"
-            placeholder="Search meetups by city"
+            placeholder="Find meetups by city"
             pattern=".{1,}" required title="1 character minimum"
             ref={(input) => { this.searchBar = input }}
             value={this.state.textbox}

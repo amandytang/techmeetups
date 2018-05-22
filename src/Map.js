@@ -131,8 +131,11 @@ export default class Map extends Component {
               mapboxApiAccessToken={TOKEN} >
                {geojson.map(this._renderMeetupMarker)}
                {this._renderPopup()}
-               <div className="controls">
-                <NavigationControl showCompass={false} onViewportChange={this._updateViewport} />
+               <div>
+                <div className="logo"><h1>techmeetups</h1></div>
+                <div className="controls">
+                  <NavigationControl showCompass={false} onViewportChange={this._updateViewport} />
+                </div>
               </div>
               <ReactModal
                  isOpen={this.state.showModal}
