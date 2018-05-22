@@ -2,7 +2,7 @@
 
 [Tech Meetups](http://tech-meetups.herokuapp.com/) is an app that allows you to easily find and join tech meetups near you. 📍
 
-![Tech Meetups Screenshot]()
+![Tech Meetups Screenshot](https://media.giphy.com/media/XJMkWRCdSdehUwDbcA/giphy.gif)
 <br/>
 
 ## Features
