@@ -17,6 +17,7 @@ body, html {
 .logo {
   float:right;
 }
+
 h1 {
   display: inline-block;
   color: white;
@@ -69,7 +70,9 @@ h1 {
   z-index: 9999999 !important;
 }
 
-.menu {outline:0;}
+.menu {
+  outline:0;
+}
 
 .menu:focus img {
   outline: auto;
@@ -116,7 +119,6 @@ h1 {
   background-color: rgba(0,0,0,0);
   border: none;
   transition: 300ms ease-out;
-
 }
 
 .close-menu:hover {
@@ -198,8 +200,8 @@ h1 {
 
 .ReactModal__Content--after-open {
   -webkit-transform: scale(1) rotateX(0deg);
-    transform: scale(1) rotateX(0deg);
-    transition: all 150ms ease-in;
+  transform: scale(1) rotateX(0deg);
+  transition: all 150ms ease-in;
 }
 
 .ReactModal__Overlay--before-close {
@@ -237,6 +239,7 @@ h1 {
   color: #121212;
   padding: 0px 22px 0px 22px;
 }
+
 .infoModalContent p a {
   color: #121212;
   border-bottom: 2px solid #FBC02D;
@@ -259,6 +262,7 @@ h1 {
   background-color: rgba(0,0,0,0);
   border: none;
 }
+
 .close-modal:hover {
   cursor: pointer;
   opacity: 0.5;
@@ -349,6 +353,7 @@ a {
 #meetups a {
   text-decoration: none;
 }
+
 .meetupName {
   list-style: none;
   margin-bottom: 5px;
@@ -410,7 +415,6 @@ a {
   border-bottom: 2px solid #121212;
 }
 
-
 .meetupInfo {
   padding: 5px 20px 0px 20px !important;
   font-size: 0.90em;
@@ -467,6 +471,7 @@ a {
   transition: all 150ms linear;
   color: #121212;
 }
+
 .groupJoined {
   text-align:center !important;
   font-size: 0.80em;
