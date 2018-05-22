@@ -17,7 +17,7 @@ export default class Map extends Component {
       viewport: {
         latitude: -33.86,
         longitude: 151.2,
-        zoom: 11.4,
+        zoom: 11.8,
         bearing: 0,
         pitch: 0,
         width: 500,
@@ -31,24 +31,25 @@ export default class Map extends Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
-componentDidMount() {
-  window.addEventListener('resize', this._resize);
-  this._resize();
-}
-
-componentDidUpdate() {
-  if (this.state.lat !== this.props.lat && this.state.lng !== this.props.lng) {
-    this.setState({lat: this.props.lat});
-    this.setState({lng: this.props.lng});
-    this.setState({
-      viewport: {
-        ...this.state.viewport,
-        latitude: this.props.lat,
-        longitude: this.props.lng
-      }
-    });
+  componentDidMount() {
+    window.addEventListener('resize', this._resize);
+    this._resize();
   }
-}
+
+  componentDidUpdate() {
+    if (this.state.lat !== this.props.lat && this.state.lng !== this.props.lng) {
+      this.setState({lat: this.props.lat});
+      this.setState({lng: this.props.lng});
+      this.setState({
+        viewport: {
+          ...this.state.viewport,
+          latitude: this.props.lat,
+          longitude: this.props.lng
+        }
+      });
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this._resize);
   }
@@ -66,7 +67,6 @@ componentDidUpdate() {
   _updateViewport = (viewport) => {
     this.setState({viewport});
   }
-
 
   _renderMeetupMarker = (meetup, index) => {
     return (
@@ -99,7 +99,7 @@ componentDidUpdate() {
         ...this.state.viewport,
         longitude: meetup.longitude,
         latitude: meetup.latitude,
-        zoom: 11.4,
+        zoom: 11.8,
         transitionDuration: 3000,
         transitionInterpolator: new FlyToInterpolator(),
         transitionEasing: d3.easeCubic
@@ -110,11 +110,12 @@ componentDidUpdate() {
   handleCloseModal () {
     this.setState({ showModal: false });
   }
+
   handleOpenModal () {
     this.setState({ showModal: true });
-}
-  render() {
+  }
 
+  render() {
     const {viewport} = this.state;
 
     return (
@@ -151,7 +152,6 @@ componentDidUpdate() {
           )
         }
       }
-
       </MeetupContext.Consumer>
     );
   }

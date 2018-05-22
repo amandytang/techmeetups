@@ -24,7 +24,6 @@ class MeetupDetails extends React.Component {
      this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
-
   componentDidMount () {
     if (localStorage.getItem("token")) {
       let token = localStorage.getItem("token");
@@ -51,11 +50,9 @@ class MeetupDetails extends React.Component {
             this.setState({attending});
             this.setState({groups});
           }
-
         }).catch( (error) => {
           console.log(error);
       });
-
     }
   }
 
@@ -70,16 +67,14 @@ class MeetupDetails extends React.Component {
       if (this.state.groups.includes(this.state.selectedMeetup.group.id)) {
         if (!this.state.hasJoinedGroup) {
           this.setState({hasJoinedGroup: true});
-          this.forceUpdate();
         }
       }
     }
 
-     if (ids.includes(this.state.selectedMeetup.id)) {
-       if (!this.state.hasJoinedMeetup) {
-         this.setState({hasJoinedMeetup: true});
-         this.forceUpdate();
-       }
+    if (ids.includes(this.state.selectedMeetup.id)) {
+      if (!this.state.hasJoinedMeetup) {
+        this.setState({hasJoinedMeetup: true});
+      }
     }
   }
 
@@ -120,7 +115,6 @@ class MeetupDetails extends React.Component {
         }
       })
       .catch( (error) => {
-
         this.setState({ showModal: true });
 
         Alert.warning(`Sorry, we couldn't add you to this group. Have you signed in? The group might also have special joining requirements that you can read about <a href="https://www.meetup.com/${groupName}" target="_blank" rel="noopener">here</a>.`, {
@@ -130,9 +124,7 @@ class MeetupDetails extends React.Component {
           html: true,
           timeout: 'none'
         });
-
       });
-
     } else {
       this.setState({ showModal: true });
     }
@@ -216,9 +208,7 @@ class MeetupDetails extends React.Component {
           html: true,
           timeout: 'none'
         });
-
       });
-
     } else {
       this.setState({ showModal: true });
     }
