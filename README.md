@@ -16,6 +16,7 @@
 ## Possible Improvements
 * Allow users to see all the meetups they've joined in one place
 * Allow users to leave groups and cancel their RSVPs
+* Sort by options other than date
 * Have the map fly to the location on click of a meetup in the sidebar
 * Consider using APIs with larger query limits
 
