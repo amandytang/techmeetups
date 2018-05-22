@@ -31,7 +31,8 @@ class App extends React.Component {
     }
   }
 
-  handleSubmit = () => {
+  handleSubmit = (e) => {
+    e.preventDefault();
 
     Geocode.setApiKey("AIzaSyCsKztr2SzD8TrNkG-W4ruL2cLBcxf7SEU");
 
@@ -47,7 +48,7 @@ class App extends React.Component {
 
            const fetchMeetups = () => {
             let jsonp = require('jsonp');
-            jsonp(`https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public&lon=${lng}&text=tech&radius=25&lat=${lat}&key=543b1a4f397a53372c62665f145eb`, null, (err, data) => {
+            jsonp(`https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public&lon=${lng}&text=tech&page=100&lat=${lat}&key=543b1a4f397a53372c62665f145eb`, null, (err, data) => {
               if (err) {
                 console.error(err.message);
               } else {
