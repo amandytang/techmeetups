@@ -36,7 +36,7 @@ The following libraries/API's/frameworks were used:
 * Mapbox 🗺
 * d3 (map animations)
 * Google Maps Geocoding API
-* Meetups API  
+* Meetup API  
 * Axios
 
 ## Acknowledgements
