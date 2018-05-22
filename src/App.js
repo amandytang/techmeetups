@@ -27,7 +27,7 @@ class App extends React.Component {
 
   handleKeyPress = (event) => {
     if(event.key === 'Enter'){
-      this.handleSubmit();
+      this.handleSubmit(event);
     }
   }
 
@@ -67,12 +67,23 @@ class App extends React.Component {
                         isLongString = false;
                       }
                     }
-                    let geojson = {
-                      "meetup": meetupData[i].name,
-                      "id": meetupData[i].id,
-                      "latitude": meetupData[i].venue.lat,
-                      "longitude": meetupData[i].venue.lon,
-                      "description": isLongString ? `${meetupData[i].description.slice(0,255)}...` : `${meetupData[i].description.slice(0,200)}`
+                    let geojson;
+                    if (meetupData[i].description) {
+                      geojson = {
+                        "meetup": meetupData[i].name,
+                        "id": meetupData[i].id,
+                        "latitude": meetupData[i].venue.lat,
+                        "longitude": meetupData[i].venue.lon,
+                        "description": isLongString ? `${meetupData[i].description.slice(0,255)}...` : `${meetupData[i].description.slice(0,200)}`
+                      }
+                    } else {
+                       geojson = {
+                        "meetup": meetupData[i].name,
+                        "id": meetupData[i].id,
+                        "latitude": meetupData[i].venue.lat,
+                        "longitude": meetupData[i].venue.lon,
+                        "description": "Coming soon."
+                      }
                     }
                     tempArr.push(geojson);
                   }
