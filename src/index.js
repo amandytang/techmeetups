@@ -24,14 +24,11 @@ const Routes = (
             <MeetupDetails />
           </div>
         } />
-
         <Route path="/back" render={()=>
           <div>
             <Navigation openSidebar={true} />
           </div>
         } />
-        
-
         <Route path="/oauth2" render={props =>
           <div>
             <Auth />
