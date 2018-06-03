@@ -37,6 +37,7 @@ The following libraries/API's/frameworks were used:
 * d3 (map animations)
 * Google Maps Geocoding API
 * Meetup API  
+* React sAlert
 * Axios
 
 ## Acknowledgements
